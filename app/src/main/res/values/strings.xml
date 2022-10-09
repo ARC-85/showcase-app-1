@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Showcase</string>
+    <string name="button_addShowcase">Add Showcase</string>
+    <string name="hint_showcaseTitle">Showcase Title</string>
+    <string name="hint_showcaseDescription">Description </string>
+    <string name="menu_addShowcase">Add</string>
+    <string name="menu_cancelShowcase">Cancel</string>
+    <string name="enter_showcase_title"> Please enter a Showcase Title </string>
+    <string name="save_showcase"> Save Showcase </string>
+    <string name="button_addImage"> Add Image </string>
+    <string name="select_showcase_image">Select showcase image</string>
+    <string name="button_changeImage">Change Image</string>
 </resources>
