@@ -1,13 +1,21 @@
 <resources>
     <string name="app_name">Showcase</string>
-    <string name="button_addShowcase">Add Showcase</string>
-    <string name="hint_showcaseTitle">Showcase Title</string>
-    <string name="hint_showcaseDescription">Description </string>
-    <string name="menu_addShowcase">Add</string>
-    <string name="menu_cancelShowcase">Cancel</string>
-    <string name="enter_showcase_title"> Please enter a Showcase Title </string>
-    <string name="save_showcase"> Save Showcase </string>
+    <string name="button_addPortfolio">Add Portfolio</string>
+    <string name="hint_portfolioTitle">Portfolio Title</string>
+    <string name="hint_portfolioDescription">Description </string>
+    <string name="menu_addPortfolio">Add</string>
+    <string name="menu_cancelPortfolio">Cancel</string>
+    <string name="enter_portfolio_title"> Please enter a Portfolio Title </string>
+    <string name="save_portfolio"> Save Portfolio </string>
     <string name="button_addImage"> Add Image </string>
-    <string name="select_showcase_image">Select showcase image</string>
+    <string name="select_portfolio_image">Select portfolio image</string>
     <string name="button_changeImage">Change Image</string>
+    <string name="hint_projectTitle">Project Title</string>
+    <string name="hint_projectDescription">Project Description </string>
+    <string name="button_addProject">Add Project</string>
+    <string name="menu_addProject">Add Project</string>
+    <string name="menu_cancelProject">Cancel Project</string>
+    <string name="enter_project_title"> Please enter a Project Title </string>
+    <string name="save_project"> Save Project</string>
+    <string name="select_project_image">Select project image</string>
 </resources>
