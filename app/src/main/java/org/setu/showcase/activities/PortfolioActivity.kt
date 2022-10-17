@@ -28,10 +28,12 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
     var portfolio = PortfolioModel()
     lateinit var app: MainApp
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var edit = false
+        edit = false
+        invalidateOptionsMenu()
         registerImagePickerCallback()
         binding = ActivityPortfolioBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,6 +47,9 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
             binding.portfolioTitle.setText(portfolio.title)
             binding.description.setText(portfolio.description)
             binding.btnAdd.setText(R.string.save_portfolio)
+            val layoutManager = LinearLayoutManager(this)
+            binding.projectRecyclerView.layoutManager = layoutManager
+            binding.projectRecyclerView.adapter = ProjectAdapter(app.portfolios.findSpecificProjects(portfolio),this)
 
             Picasso.get()
                 .load(portfolio.image)
@@ -69,22 +74,25 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
                 }
             }
             setResult(RESULT_OK)
-            finish()
+            val intent = Intent(this, PortfolioListActivity::class.java)
+
+            startActivity(intent)
         }
 
         binding.chooseImage.setOnClickListener {
             showImagePicker(imageIntentLauncher)
         }
 
-        val layoutManager = LinearLayoutManager(this)
-        binding.projectRecyclerView.layoutManager = layoutManager
-        binding.projectRecyclerView.adapter = ProjectAdapter(app.projects.findAll(),this)
+
 
         registerRefreshCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_portfolio, menu)
+        if (!edit) {
+            menu.getItem(1).isVisible = false
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -93,6 +101,8 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
             R.id.item_cancel -> { finish() }
             R.id.project_add -> {
                 val launcherIntent = Intent(this, ProjectActivity::class.java)
+
+                launcherIntent.putExtra("portfolio_edit", portfolio)
                 refreshIntentLauncher.launch(launcherIntent)
             }
         }
@@ -122,6 +132,7 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
     override fun onProjectClick(project: NewProject) {
         val launcherIntent = Intent(this, ProjectActivity::class.java)
         launcherIntent.putExtra("project_edit", project)
+        launcherIntent.putExtra("portfolio_edit", portfolio)
         refreshIntentLauncher.launch(launcherIntent)
     }
 
