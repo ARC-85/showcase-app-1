@@ -98,7 +98,11 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_cancel -> { finish() }
+            R.id.item_cancel -> {
+                val intent = Intent(this, PortfolioListActivity::class.java)
+
+                startActivity(intent)
+            }
             R.id.project_add -> {
                 val launcherIntent = Intent(this, ProjectActivity::class.java)
 
