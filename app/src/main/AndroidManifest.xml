@@ -10,14 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Showcase">
-        <activity android:name=".activities.ShowcaseListActivity"
+        <activity android:name=".activities.PortfolioListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ShowcaseActivity">
+        <activity android:name=".activities.PortfolioActivity">
+        </activity>
+        <activity android:name=".activities.ProjectActivity">
         </activity>
     </application>
 

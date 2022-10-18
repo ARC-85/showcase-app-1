@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.setu.showcase.activities.ShowcaseActivity">
+    tools:context="org.setu.showcase.activities.PortfolioActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,12 +41,12 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/showcaseTitle"
+                    android:id="@+id/portfolioTitle"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_margin="8dp"
                     android:autofillHints=""
-                    android:hint="@string/hint_showcaseTitle"
+                    android:hint="@string/hint_portfolioTitle"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:hint="@string/hint_showcaseDescription"
+                    android:hint="@string/hint_portfolioDescription"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
@@ -80,7 +80,7 @@
                     android:textSize="16sp"/>
 
                 <ImageView
-                    android:id="@+id/showcaseImage"
+                    android:id="@+id/portfolioImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@mipmap/ic_launcher"/>
@@ -94,12 +94,28 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
-                    android:text="@string/button_addShowcase"
+                    android:text="@string/button_addPortfolio"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/projectRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
             </LinearLayout>
+
+
+
         </ScrollView>
 
+
+
     </RelativeLayout>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
