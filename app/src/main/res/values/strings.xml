@@ -18,4 +18,9 @@
     <string name="enter_project_title"> Please enter a Project Title </string>
     <string name="save_project"> Save Project</string>
     <string name="select_project_image">Select project image</string>
+    <string name="button_location">Set Location</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="hint_projectLatitude">Project Latitude</string>
+    <string name="hint_projectLongitude">Project Longitude</string>
+
 </resources>

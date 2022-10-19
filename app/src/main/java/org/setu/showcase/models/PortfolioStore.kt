@@ -8,4 +8,5 @@ interface PortfolioStore {
     fun createProject(project: NewProject)
     fun updateProject(project: NewProject)
     fun findSpecificProjects(portfolio: PortfolioModel): List<NewProject>
+    fun deleteProject(project: NewProject)
 }

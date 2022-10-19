@@ -71,8 +71,16 @@ class PortfolioMemStore : PortfolioStore {
             foundProject.projectTitle = project.projectTitle
             foundProject.projectDescription = project.projectDescription
             foundProject.projectImage = project.projectImage
+            foundProject.lat = project.lat
+            foundProject.lng = project.lng
+            foundProject.zoom = project.zoom
             logAllProjects()
         }
+    }
+
+    override fun deleteProject(project: NewProject) {
+        projects.remove(project)
+        logAllProjects()
     }
 
     private fun logAllProjects() {
