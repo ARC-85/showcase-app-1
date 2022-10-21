@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_border"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/splashImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="223dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/splash_image"
+        app:srcCompat="@drawable/_10_1_3d_view_2" />
+
+    <TextView
+        android:id="@+id/splashTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:padding="30dp"
+        android:text="@string/app_name"
+
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/splashProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:indeterminateTint="@color/black" />
+
+    <TextView
+        android:id="@+id/splashTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center_horizontal"
+        android:padding="15dp"
+        android:text="@string/designed_by"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

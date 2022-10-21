@@ -2,7 +2,7 @@ package org.setu.showcase.main
 
 import android.app.Application
 import org.setu.showcase.models.PortfolioMemStore
-// import org.setu.showcase.models.PortfolioModel
+import org.setu.showcase.models.PortfolioModel
 import timber.log.Timber
 import timber.log.Timber.i
 

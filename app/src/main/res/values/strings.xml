@@ -22,5 +22,7 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="hint_projectLatitude">Project Latitude</string>
     <string name="hint_projectLongitude">Project Longitude</string>
+    <string name="designed_by">Designed By Andrew Cameron</string>
+    <string name="splash_image">Splash Image</string>
 
 </resources>
