@@ -40,16 +40,19 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
+        //loadProjects()
 
         if (intent.hasExtra("portfolio_edit")) {
             edit = true
             portfolio = intent.extras?.getParcelable("portfolio_edit")!!
+            println(portfolio)
             binding.portfolioTitle.setText(portfolio.title)
             binding.description.setText(portfolio.description)
             binding.btnAdd.setText(R.string.save_portfolio)
             val layoutManager = LinearLayoutManager(this)
             binding.projectRecyclerView.layoutManager = layoutManager
-            binding.projectRecyclerView.adapter = ProjectAdapter(app.portfolios.findSpecificProjects(portfolio),this)
+            loadProjects()
+            // binding.projectRecyclerView.adapter = ProjectAdapter(app.portfolios.findSpecificProjects(portfolio),this)
 
             Picasso.get()
                 .load(portfolio.image)
@@ -61,6 +64,7 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
         }
 
         binding.btnAdd.setOnClickListener() {
+
             portfolio.title = binding.portfolioTitle.text.toString()
             portfolio.description = binding.description.text.toString()
             if (portfolio.title.isEmpty()) {
@@ -81,6 +85,12 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
 
         binding.chooseImage.setOnClickListener {
             showImagePicker(imageIntentLauncher)
+        }
+
+        binding.btnPortfolioDelete.setOnClickListener() {
+            app.portfolios.delete(portfolio)
+            val intent = Intent(this, PortfolioListActivity::class.java)
+            startActivity(intent)
         }
 
 
@@ -143,7 +153,25 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.projectRecyclerView.adapter?.notifyDataSetChanged() }
+            { loadProjects() }
+    }
+
+    private fun loadProjects() {
+        if (intent.hasExtra("portfolio_edit")) {
+            portfolio = intent.extras?.getParcelable("portfolio_edit")!!
+        }
+
+        var portfolioProjects = portfolio.projects
+        println("portfolio: $portfolio")
+        println("portfolioProjects: $portfolioProjects")
+        if (portfolioProjects != null) {
+            showProjects(portfolioProjects.toList())
+        }
+    }
+
+    fun showProjects (projects: List<NewProject>) {
+        binding.projectRecyclerView.adapter = ProjectAdapter(projects, this)
+        binding.projectRecyclerView.adapter?.notifyDataSetChanged()
     }
 
 }

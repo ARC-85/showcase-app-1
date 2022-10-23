@@ -1,6 +1,7 @@
 package org.setu.showcase.models
 
 
+import android.annotation.SuppressLint
 import timber.log.Timber.i
 
 var lastId = 0L
@@ -19,6 +20,7 @@ class PortfolioMemStore : PortfolioStore {
 
     val portfolios = ArrayList<PortfolioModel>()
 
+
     override fun findAll(): List<PortfolioModel> {
         return portfolios
     }
@@ -35,13 +37,28 @@ class PortfolioMemStore : PortfolioStore {
             foundPortfolio.title = portfolio.title
             foundPortfolio.description = portfolio.description
             foundPortfolio.image = portfolio.image
+            foundPortfolio.projects = portfolio.projects
             logAll()
         }
+    }
+
+    override fun delete(portfolio: PortfolioModel) {
+        portfolios.remove(portfolio)
+        logAll()
     }
 
     private fun logAll() {
         portfolios.forEach { i("$it") }
     }
+
+    /*override fun findPortfolioProjects(portfolio: PortfolioModel): List<NewProject> {
+        var foundPortfolio: PortfolioModel? = portfolios.find { p -> p.id == portfolio.id }
+        if (foundPortfolio != null) {
+            return projects.filter { p -> p.portfolioId == foundPortfolio.id }
+
+        }
+        return portfolioProjects
+    }*/
 
     val projects = ArrayList<NewProject>()
     //var filtered = ArrayList<NewProject>()
@@ -59,13 +76,27 @@ class PortfolioMemStore : PortfolioStore {
         return projects
     }
 
-    override fun createProject(project: NewProject) {
+    override fun createProject(project: NewProject, portfolio: PortfolioModel) {
         project.projectId = getProjectId()
         projects.add(project)
         logAllProjects()
+        var foundPortfolio: PortfolioModel? = portfolios.find { p -> p.id == portfolio.id }
+        if (foundPortfolio != null) {
+
+            if (foundPortfolio.projects != null) {
+                var portfolioProjects = foundPortfolio.projects
+                portfolioProjects = portfolioProjects?.plus(project)
+                foundPortfolio.projects = portfolioProjects
+
+            } else {
+                foundPortfolio.projects = arrayOf(project)
+            }
+            logAll()
+        }
+
     }
 
-    override fun updateProject(project: NewProject) {
+    override fun updateProject(project: NewProject, portfolio: PortfolioModel) {
         var foundProject: NewProject? = projects.find { p -> p.projectId == project.projectId }
         if (foundProject != null) {
             foundProject.projectTitle = project.projectTitle
@@ -76,15 +107,40 @@ class PortfolioMemStore : PortfolioStore {
             foundProject.zoom = project.zoom
             logAllProjects()
         }
+        var foundPortfolio: PortfolioModel? = portfolios.find { p -> p.id == portfolio.id }
+        if (foundPortfolio != null) {
+
+            if (foundPortfolio.projects != null) {
+                var portfolioProjects = foundPortfolio.projects!!.dropLast(1)
+                portfolioProjects = portfolioProjects?.plus(project)
+                foundPortfolio.projects = ArrayList(portfolioProjects).toTypedArray()
+
+            }
+            logAll()
+        }
     }
 
-    override fun deleteProject(project: NewProject) {
+    @SuppressLint("SuspiciousIndentation")
+    override fun deleteProject(project: NewProject, portfolio: PortfolioModel) {
         projects.remove(project)
         logAllProjects()
+        var foundPortfolio: PortfolioModel? = portfolios.find { p -> p.id == portfolio.id }
+        if (foundPortfolio != null) {
+            if (foundPortfolio.projects != null) {
+                var portfolioProjects = foundPortfolio.projects!!.dropLast(1)
+
+                foundPortfolio.projects = ArrayList(portfolioProjects).toTypedArray()
+
+            } else
+            logAll()
+        }
     }
 
     private fun logAllProjects() {
         projects.forEach { i("$it") }
     }
 
+
 }
+
+

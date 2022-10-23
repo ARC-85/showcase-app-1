@@ -4,9 +4,10 @@ interface PortfolioStore {
     fun findAll(): List<PortfolioModel>
     fun create(portfolio: PortfolioModel)
     fun update(portfolio: PortfolioModel)
+    fun delete(portfolio: PortfolioModel)
     fun findAllProjects(): List<NewProject>
-    fun createProject(project: NewProject)
-    fun updateProject(project: NewProject)
+    fun createProject(project: NewProject, portfolio: PortfolioModel)
+    fun updateProject(project: NewProject, portfolio: PortfolioModel)
     fun findSpecificProjects(portfolio: PortfolioModel): List<NewProject>
-    fun deleteProject(project: NewProject)
+    fun deleteProject(project: NewProject, portfolio: PortfolioModel)
 }
