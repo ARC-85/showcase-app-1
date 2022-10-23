@@ -82,21 +82,36 @@ class ProjectActivity : AppCompatActivity() {
             project.projectTitle = binding.projectTitle.text.toString()
             project.projectDescription = binding.projectDescription.text.toString()
             project.portfolioId = portfolio.id
+            var portfolioProjects = portfolio.projects
             if (project.projectTitle.isEmpty()) {
                 Snackbar.make(it,R.string.enter_project_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
                 if (edit) {
-                    app.portfolios.updateProject(project.copy())
+                    app.portfolios.updateProject(project.copy(), portfolio)
+                    /*if (portfolioProjects != null) {
+                        portfolioProjects += (project.copy())
+                        portfolio.projects = portfolioProjects
+                    }
+                    app.portfolios.update(portfolio.copy())*/
                 } else {
-                    app.portfolios.createProject(project.copy())
+
+                    app.portfolios.createProject(project.copy(), portfolio)
+
+
                 }
             }
             setResult(RESULT_OK)
+            //finish()
+            val intent = Intent(this, PortfolioListActivity::class.java)
 
-            val intent = Intent(this, PortfolioActivity::class.java)
-            intent.putExtra("portfolio_edit", portfolio)
             startActivity(intent)
+            /*val intent = Intent(this, PortfolioActivity::class.java)
+            intent.putExtra("portfolio_edit", portfolio)
+            startActivity(intent)*/
+            /*val launcherIntent = Intent(this, PortfolioActivity::class.java)
+            launcherIntent.putExtra("portfolio_edit", portfolio)
+            refreshIntentLauncher.launch(launcherIntent)*/
 
 
         }
@@ -110,9 +125,9 @@ class ProjectActivity : AppCompatActivity() {
         }
 
         binding.btnProjectDelete.setOnClickListener() {
-            app.portfolios.deleteProject(project)
-            val intent = Intent(this, PortfolioActivity::class.java)
-            intent.putExtra("portfolio_edit", portfolio)
+            app.portfolios.deleteProject(project, portfolio)
+            val intent = Intent(this, PortfolioListActivity::class.java)
+
             startActivity(intent)
         }
 
@@ -130,6 +145,7 @@ class ProjectActivity : AppCompatActivity() {
         }
 
         registerMapCallback()
+
 
     }
 

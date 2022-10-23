@@ -31,7 +31,7 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = PortfolioAdapter(app.portfolios.findAll(),this)
+        loadPortfolios()
 
         registerRefreshCallback()
     }
@@ -60,6 +60,15 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.recyclerView.adapter?.notifyDataSetChanged() }
+            { loadPortfolios() }
+    }
+
+    private fun loadPortfolios() {
+        showPortfolios(app.portfolios.findAll())
+    }
+
+    fun showPortfolios (portfolios: List<PortfolioModel>) {
+        binding.recyclerView.adapter = PortfolioAdapter(portfolios, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }

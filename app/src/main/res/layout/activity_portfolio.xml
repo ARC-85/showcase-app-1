@@ -98,6 +98,19 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnPortfolioDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:background="@color/colorAccent"
+                    android:baselineAligned="false"
+                    android:clickable="true"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="8dp"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/projectRecyclerView"
                     android:layout_width="match_parent"
