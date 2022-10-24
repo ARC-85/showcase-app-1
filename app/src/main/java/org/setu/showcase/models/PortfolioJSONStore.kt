@@ -62,6 +62,7 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
     }
 
     override fun delete(portfolio: PortfolioModel) {
+        println("this is the removed portfolio: $portfolio")
         portfolios.remove(portfolio)
         serialize()
     }
@@ -126,6 +127,9 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
             foundProject.lat = project.lat
             foundProject.lng = project.lng
             foundProject.zoom = project.zoom
+            foundProject.projectCompletionDay = project.projectCompletionDay
+            foundProject.projectCompletionMonth = project.projectCompletionMonth
+            foundProject.projectCompletionYear = project.projectCompletionYear
             serializeProjects()
         }
         var foundPortfolio: PortfolioModel? = portfolios.find { p -> p.id == portfolio.id }

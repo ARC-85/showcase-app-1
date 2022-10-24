@@ -23,7 +23,7 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarAdd"
+                android:id="@+id/toolbarPortfolio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:titleTextColor="@color/colorPrimary" />
@@ -40,6 +40,43 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/portfolioName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/alata"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:inputType="none"
+                    android:textColor="#2AA599"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/newPortfolioLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/alata"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:inputType="none"
+                    android:textColor="#2AA599"
+                    android:textSize="20sp"
+                    android:text="@string/new_portfolio_label"/>
+
+                <TextView
+                    android:id="@+id/editPortfolioDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/edit_portfolio_details" />
+
+                <TextView
+                    android:id="@+id/portfolioTitleLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/portfolio_title_label" />
+
                 <EditText
                     android:id="@+id/portfolioTitle"
                     android:layout_width="match_parent"
@@ -53,6 +90,13 @@
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/portfolioDescriptionLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/portfolio_description_label" />
 
                 <EditText
                     android:id="@+id/description"
@@ -98,18 +142,19 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnPortfolioDelete"
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/btnNewProject"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="20dp"
+                    android:layout_margin="16dp"
                     android:background="@color/colorAccent"
-                    android:baselineAligned="false"
-                    android:clickable="true"
-                    android:paddingTop="2dp"
+                    android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    app:srcCompat="@android:drawable/ic_menu_delete" />
+                    android:stateListAnimator="@null"
+                    android:text="@string/new_project"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/projectRecyclerView"

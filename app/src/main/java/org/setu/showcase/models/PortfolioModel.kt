@@ -19,7 +19,10 @@ data class NewProject(var projectId: Long = 0,
                           var projectImage: Uri = Uri.EMPTY,
                           var lat : Double = 0.0,
                           var lng: Double = 0.0,
-                          var zoom: Float = 0f) : Parcelable
+                          var zoom: Float = 0f,
+                      var projectCompletionDay: Int = 1,
+                      var projectCompletionMonth: Int = 1,
+                      var projectCompletionYear: Int = 1900) : Parcelable
 
 @Parcelize
 data class Location(var lat: Double = 0.0,
