@@ -2,6 +2,7 @@ package org.setu.showcase.models
 
 
 import android.annotation.SuppressLint
+import timber.log.Timber
 import timber.log.Timber.i
 
 var lastId = 0L
@@ -19,6 +20,7 @@ internal fun getProjectId(): Long {
 class PortfolioMemStore : PortfolioStore {
 
     val portfolios = ArrayList<PortfolioModel>()
+    var totalProjects = mutableListOf<NewProject>()
 
 
     override fun findAll(): List<PortfolioModel> {
@@ -49,6 +51,25 @@ class PortfolioMemStore : PortfolioStore {
 
     private fun logAll() {
         portfolios.forEach { i("$it") }
+    }
+
+    private fun logProjects() {
+        portfolios.forEach { Timber.i("$it")
+            var portfolioProjects = it.projects
+            if (portfolioProjects != null) {
+                projects += portfolioProjects.toMutableList()
+            }
+        }
+    }
+
+    override fun findProjects(): MutableList<NewProject> {
+        logProjects()
+        return projects
+    }
+
+    override fun findProject(id: Long): NewProject? {
+        logProjects()
+        return projects.find { p -> p.projectId == id }
     }
 
     /*override fun findPortfolioProjects(portfolio: PortfolioModel): List<NewProject> {

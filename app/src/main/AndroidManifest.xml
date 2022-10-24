@@ -57,6 +57,7 @@
         </activity>
         <activity android:name=".activities.PortfolioActivity" />
         <activity android:name=".activities.ProjectActivity" />
+        <activity android:name=".activities.ProjectMapsActivity" />
     </application>
 
 </manifest>

@@ -27,6 +27,7 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
 
     var portfolios = mutableListOf<PortfolioModel>()
 
+
     init {
         if (exists(context, PORTFOLIO_JSON_FILE)) {
             deserialize()
@@ -42,6 +43,16 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
     override fun findAll(): MutableList<PortfolioModel> {
         logAll()
         return portfolios
+    }
+
+    override fun findProjects(): MutableList<NewProject> {
+        logProjects()
+        return projects
+    }
+
+    override fun findProject(id: Long): NewProject? {
+        logProjects()
+        return projects.find { p -> p.projectId == id }
     }
 
     override fun create(portfolio: PortfolioModel) {
@@ -79,6 +90,15 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
 
     private fun logAll() {
         portfolios.forEach { Timber.i("$it") }
+    }
+
+    private fun logProjects() {
+        portfolios.forEach { Timber.i("$it")
+            var portfolioProjects = it.projects
+            if (portfolioProjects != null) {
+                projects += portfolioProjects.toMutableList()
+            }
+        }
     }
 
     var projects = mutableListOf<NewProject>()
