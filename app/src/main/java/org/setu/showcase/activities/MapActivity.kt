@@ -16,6 +16,7 @@ import org.setu.showcase.R
 import org.setu.showcase.models.Location
 import org.setu.showcase.models.NewProject
 import org.setu.showcase.models.PortfolioModel
+import org.w3c.dom.Text
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
 
@@ -38,7 +39,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
         map = googleMap
         val loc = LatLng(location.lat, location.lng)
         val options = MarkerOptions()
-            .title("Showcase")
+            .title("Project")
             .snippet("GPS : $loc")
             .draggable(true)
             .position(loc)
@@ -48,22 +49,25 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
         map.setOnMarkerClickListener(this)
     }
 
-    override fun onMarkerClick(marker: Marker): Boolean {
-        val loc = LatLng(location.lat, location.lng)
-        marker.snippet = "GPS : $loc"
-        return false
-    }
-
     override fun onMarkerDragStart(marker: Marker) {
+
     }
 
-    override fun onMarkerDrag(marker: Marker) {
+    override fun onMarkerDrag(marker: Marker)  {
+
     }
 
     override fun onMarkerDragEnd(marker: Marker) {
         location.lat = marker.position.latitude
         location.lng = marker.position.longitude
         location.zoom = map.cameraPosition.zoom
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val loc = LatLng(location.lat, location.lng)
+        println(loc)
+        marker.snippet = "GPS : $loc"
+        return false
     }
 
     override fun onBackPressed() {

@@ -27,6 +27,7 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
 
     var portfolios = mutableListOf<PortfolioModel>()
 
+
     init {
         if (exists(context, PORTFOLIO_JSON_FILE)) {
             deserialize()
@@ -42,6 +43,16 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
     override fun findAll(): MutableList<PortfolioModel> {
         logAll()
         return portfolios
+    }
+
+    override fun findProjects(): MutableList<NewProject> {
+        logProjects()
+        return projects
+    }
+
+    override fun findProject(id: Long): NewProject? {
+        logProjects()
+        return projects.find { p -> p.projectId == id }
     }
 
     override fun create(portfolio: PortfolioModel) {
@@ -62,6 +73,7 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
     }
 
     override fun delete(portfolio: PortfolioModel) {
+        println("this is the removed portfolio: $portfolio")
         portfolios.remove(portfolio)
         serialize()
     }
@@ -78,6 +90,15 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
 
     private fun logAll() {
         portfolios.forEach { Timber.i("$it") }
+    }
+
+    private fun logProjects() {
+        portfolios.forEach { Timber.i("$it")
+            var portfolioProjects = it.projects
+            if (portfolioProjects != null) {
+                projects += portfolioProjects.toMutableList()
+            }
+        }
     }
 
     var projects = mutableListOf<NewProject>()
@@ -126,6 +147,9 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
             foundProject.lat = project.lat
             foundProject.lng = project.lng
             foundProject.zoom = project.zoom
+            foundProject.projectCompletionDay = project.projectCompletionDay
+            foundProject.projectCompletionMonth = project.projectCompletionMonth
+            foundProject.projectCompletionYear = project.projectCompletionYear
             serializeProjects()
         }
         var foundPortfolio: PortfolioModel? = portfolios.find { p -> p.id == portfolio.id }

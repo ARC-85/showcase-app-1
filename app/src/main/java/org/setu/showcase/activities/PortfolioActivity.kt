@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
@@ -37,8 +38,14 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
         registerImagePickerCallback()
         binding = ActivityPortfolioBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
+        binding.toolbarPortfolio.title = "Portfolio"
+        binding.btnNewProject.isVisible = false
+        binding.portfolioName.isVisible = false
+        binding.newPortfolioLabel.isVisible = true
+        binding.editPortfolioDetails.isVisible = false
+        binding.btnAdd.isVisible = false
+
+        setSupportActionBar(binding.toolbarPortfolio)
         app = application as MainApp
         //loadProjects()
 
@@ -46,9 +53,16 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
             edit = true
             portfolio = intent.extras?.getParcelable("portfolio_edit")!!
             println(portfolio)
+            binding.portfolioName.text = portfolio.title
             binding.portfolioTitle.setText(portfolio.title)
             binding.description.setText(portfolio.description)
             binding.btnAdd.setText(R.string.save_portfolio)
+            binding.btnAdd.isVisible = false
+            binding.btnNewProject.isVisible = true
+            binding.portfolioName.isVisible = true
+            binding.newPortfolioLabel.isVisible = false
+            binding.editPortfolioDetails.isVisible = true
+
             val layoutManager = LinearLayoutManager(this)
             binding.projectRecyclerView.layoutManager = layoutManager
             loadProjects()
@@ -87,11 +101,18 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
             showImagePicker(imageIntentLauncher)
         }
 
-        binding.btnPortfolioDelete.setOnClickListener() {
+        binding.btnNewProject.setOnClickListener() {
+            val launcherIntent = Intent(this, ProjectActivity::class.java)
+
+            launcherIntent.putExtra("portfolio_edit", portfolio)
+            refreshIntentLauncher.launch(launcherIntent)
+        }
+
+        /*binding.btnPortfolioDelete.setOnClickListener() {
             app.portfolios.delete(portfolio)
             val intent = Intent(this, PortfolioListActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
 
 
@@ -101,7 +122,8 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_portfolio, menu)
         if (!edit) {
-            menu.getItem(1).isVisible = false
+            //menu.getItem(1).isVisible = false
+            menu.getItem(2).isVisible = false
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -113,11 +135,36 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
 
                 startActivity(intent)
             }
-            R.id.project_add -> {
-                val launcherIntent = Intent(this, ProjectActivity::class.java)
+            R.id.item_portfolio_delete -> {
+                if (intent.hasExtra("portfolio_edit")) {
+                    portfolio = intent.extras?.getParcelable("portfolio_edit")!!
+                    println("this is the delete portfolio: $portfolio")
+                    app.portfolios.delete(portfolio)
+                    val intent = Intent(this, PortfolioListActivity::class.java)
+                    startActivity(intent)
+                }
 
-                launcherIntent.putExtra("portfolio_edit", portfolio)
-                refreshIntentLauncher.launch(launcherIntent)
+            }
+            R.id.item_portfolio_save -> {
+                portfolio.title = binding.portfolioTitle.text.toString()
+                portfolio.description = binding.description.text.toString()
+                if (portfolio.title.isEmpty()) {
+                    Snackbar.make(findViewById(android.R.id.content),R.string.enter_portfolio_title, Snackbar.LENGTH_LONG)
+                        .show()
+                } else {
+                    if (edit) {
+                        app.portfolios.update(portfolio.copy())
+                        setResult(RESULT_OK)
+                        val intent = Intent(this, PortfolioListActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        app.portfolios.create(portfolio.copy())
+                        setResult(RESULT_OK)
+                        val intent = Intent(this, PortfolioListActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+
             }
         }
         return super.onOptionsItemSelected(item)

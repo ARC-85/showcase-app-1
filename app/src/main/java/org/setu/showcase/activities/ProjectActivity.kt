@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.DatePicker
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -20,6 +23,7 @@ import org.setu.showcase.models.NewProject
 import org.setu.showcase.models.PortfolioModel
 import org.setu.showcase.models.Location
 import timber.log.Timber.i
+import java.util.*
 import java.util.Objects.toString
 
 
@@ -30,6 +34,11 @@ class ProjectActivity : AppCompatActivity() {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var project = NewProject()
+    var edit = false
+    val today = Calendar.getInstance()
+    var dateDay = today.get(Calendar.DAY_OF_MONTH)
+    var dateMonth = today.get(Calendar.MONTH)
+    var dateYear = today.get(Calendar.YEAR)
 
 
     //val portfolioId=intent.getLongExtra("portfolio_Id", 0)
@@ -41,18 +50,20 @@ class ProjectActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var edit = false
+
 
         portfolio = intent.extras?.getParcelable("portfolio_edit")!!
         registerImagePickerCallback()
 
         binding = ActivityProjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbarAdd.title = title
-        binding.btnProjectDelete.isVisible = false
+        binding.toolbarProject.title = "Project"
         binding.projectLatitude.isVisible = false
         binding.projectLongitude.isVisible = false
-        setSupportActionBar(binding.toolbarAdd)
+        setSupportActionBar(binding.toolbarProject)
+        binding.btnProjectAdd.isVisible = false
+
+
         app = application as MainApp
 
         if (intent.hasExtra("project_edit")) {
@@ -65,7 +76,7 @@ class ProjectActivity : AppCompatActivity() {
             var formattedLongitude = String.format("%.2f", project.lng);
             binding.projectLongitude.setText(formattedLongitude)
             binding.btnProjectAdd.setText(R.string.save_project)
-            binding.btnProjectDelete.isVisible = true
+            binding.btnProjectAdd.isVisible = false
             binding.projectLatitude.isVisible = true
             binding.projectLongitude.isVisible = true
 
@@ -81,8 +92,11 @@ class ProjectActivity : AppCompatActivity() {
         binding.btnProjectAdd.setOnClickListener() {
             project.projectTitle = binding.projectTitle.text.toString()
             project.projectDescription = binding.projectDescription.text.toString()
+            project.projectCompletionDay = dateDay
+            project.projectCompletionMonth = dateMonth
+            project.projectCompletionYear = dateYear
             project.portfolioId = portfolio.id
-            var portfolioProjects = portfolio.projects
+
             if (project.projectTitle.isEmpty()) {
                 Snackbar.make(it,R.string.enter_project_title, Snackbar.LENGTH_LONG)
                     .show()
@@ -124,12 +138,12 @@ class ProjectActivity : AppCompatActivity() {
             i ("Set Location Pressed")
         }
 
-        binding.btnProjectDelete.setOnClickListener() {
+        /*binding.btnProjectDelete.setOnClickListener() {
             app.portfolios.deleteProject(project, portfolio)
             val intent = Intent(this, PortfolioListActivity::class.java)
 
             startActivity(intent)
-        }
+        }*/
 
         binding.projectLocation.setOnClickListener {
             val location = Location(52.245696, -7.139102, 15f)
@@ -144,6 +158,28 @@ class ProjectActivity : AppCompatActivity() {
             mapIntentLauncher.launch(launcherIntent)
         }
 
+        val datePicker = findViewById<DatePicker>(R.id.projectCompletionDatePicker)
+
+        if (edit) {
+            dateDay = project.projectCompletionDay
+            dateMonth = project.projectCompletionMonth - 1
+            dateYear = project.projectCompletionYear
+        }
+        datePicker.init(dateYear, dateMonth, dateDay) { view, year, month, day ->
+            val month = month + 1
+            val msg = "You Selected: $day/$month/$year"
+            var dateProjectCompletion = "$day/$month/$year"
+            dateDay = day
+            dateMonth = month
+            dateYear = year
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            println ("this is dateDay: $dateDay")
+            println ("this is dateMonth: $dateMonth")
+            println ("this is dateYear: $dateYear")
+            println("this is datePicker: $datePicker")
+            println("this is dateProjectCompletion: $dateProjectCompletion")
+        }
+
         registerMapCallback()
 
 
@@ -151,6 +187,9 @@ class ProjectActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_project, menu)
+        if (!edit) {
+            menu.getItem(2).isVisible = false
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -160,6 +199,41 @@ class ProjectActivity : AppCompatActivity() {
                 val intent = Intent(this, PortfolioActivity::class.java)
                 intent.putExtra("portfolio_edit", portfolio)
                 startActivity(intent)
+            }
+            R.id.item_project_delete -> {
+                if (intent.hasExtra("project_edit")) {
+                    project = intent.extras?.getParcelable("project_edit")!!
+                    println("this is the delete project: $project")
+                    app.portfolios.deleteProject(project, portfolio)
+                    val intent = Intent(this, PortfolioListActivity::class.java)
+                    startActivity(intent)
+                }
+
+            }
+            R.id.item_project_save -> {
+                project.projectTitle = binding.projectTitle.text.toString()
+                project.projectDescription = binding.projectDescription.text.toString()
+                project.projectCompletionDay = dateDay
+                project.projectCompletionMonth = dateMonth
+                project.projectCompletionYear = dateYear
+                project.portfolioId = portfolio.id
+
+                if (project.projectTitle.isEmpty()) {
+                    Snackbar.make(findViewById(android.R.id.content),R.string.enter_project_title, Snackbar.LENGTH_LONG)
+                        .show()
+                } else {
+                    if (edit) {
+                        app.portfolios.updateProject(project.copy(), portfolio)
+                        setResult(RESULT_OK)
+                        val intent = Intent(this, PortfolioListActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        app.portfolios.createProject(project.copy(), portfolio)
+                        setResult(RESULT_OK)
+                        val intent = Intent(this, PortfolioListActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
             }
         }
         return super.onOptionsItemSelected(item)

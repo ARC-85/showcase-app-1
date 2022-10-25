@@ -20,6 +20,7 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivityPortfolioListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,7 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
         loadPortfolios()
 
         registerRefreshCallback()
+        registerMapCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -46,6 +48,10 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, PortfolioActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
+            }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, ProjectMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -61,6 +67,12 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { loadPortfolios() }
+    }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {  }
     }
 
     private fun loadPortfolios() {

@@ -3,7 +3,7 @@
     <string name="button_addPortfolio">Add Portfolio</string>
     <string name="hint_portfolioTitle">Portfolio Title</string>
     <string name="hint_portfolioDescription">Description </string>
-    <string name="menu_addPortfolio">Add</string>
+    <string name="menu_addPortfolio">Add Portfolio</string>
     <string name="menu_cancelPortfolio">Cancel</string>
     <string name="enter_portfolio_title"> Please enter a Portfolio Title </string>
     <string name="save_portfolio"> Save Portfolio </string>
@@ -24,5 +24,19 @@
     <string name="hint_projectLongitude">Project Longitude</string>
     <string name="designed_by">Designed By Andrew Cameron</string>
     <string name="splash_image">Splash Image</string>
+    <string name="new_project">Add New Project</string>
+    <string name="menu_portfolio_delete">Portfolio Delete</string>
+    <string name="edit_portfolio_details">Edit Portfolio Details</string>
+    <string name="portfolio_title_label">Portfolio Title</string>
+    <string name="portfolio_description_label">Portfolio Description</string>
+    <string name="new_portfolio_label">New Portfolio</string>
+    <string name="portfolios_label">Portfolios</string>
+    <string name="menu_project_delete">Project Delete</string>
+    <string name="title_activity_project_maps">ProjectMapsActivity</string>
+    <string name="project_image_placeholder">Project Image</string>
+    <string name="project_title_placeholder">Project Title</string>
+    <string name="project_description_placeholder">Project Description</string>
+    <string name="menu_viewProjects">View Projects</string>
+    <string name="portfolio_projectList">List of Projects</string>
 
 </resources>
