@@ -23,7 +23,7 @@ import org.setu.showcase.adapters.ProjectAdapter
 import org.setu.showcase.adapters.ProjectListener
 import timber.log.Timber.i
 
-class PortfolioActivity : AppCompatActivity(), ProjectListener {
+class PortfolioActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPortfolioBinding
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     var portfolio = PortfolioModel()
@@ -39,7 +39,7 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
         binding = ActivityPortfolioBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarPortfolio.title = "Portfolio"
-        binding.btnNewProject.isVisible = false
+
         binding.portfolioName.isVisible = false
         binding.newPortfolioLabel.isVisible = true
         binding.editPortfolioDetails.isVisible = false
@@ -58,14 +58,12 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
             binding.description.setText(portfolio.description)
             binding.btnAdd.setText(R.string.save_portfolio)
             binding.btnAdd.isVisible = false
-            binding.btnNewProject.isVisible = true
+
             binding.portfolioName.isVisible = true
             binding.newPortfolioLabel.isVisible = false
             binding.editPortfolioDetails.isVisible = true
 
-            val layoutManager = LinearLayoutManager(this)
-            binding.projectRecyclerView.layoutManager = layoutManager
-            loadProjects()
+
             // binding.projectRecyclerView.adapter = ProjectAdapter(app.portfolios.findSpecificProjects(portfolio),this)
 
             Picasso.get()
@@ -101,11 +99,17 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
             showImagePicker(imageIntentLauncher)
         }
 
-        binding.btnNewProject.setOnClickListener() {
+        /*binding.btnNewProject.setOnClickListener() {
             val launcherIntent = Intent(this, ProjectActivity::class.java)
 
             launcherIntent.putExtra("portfolio_edit", portfolio)
             refreshIntentLauncher.launch(launcherIntent)
+        }*/
+
+        binding.btnGoToProjects.setOnClickListener() {
+            val intent = Intent(this, ProjectListActivity::class.java)
+            intent.putExtra("portfolio_edit", portfolio)
+            startActivity(intent)
         }
 
         /*binding.btnPortfolioDelete.setOnClickListener() {
@@ -116,7 +120,7 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
 
 
 
-        registerRefreshCallback()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -190,35 +194,14 @@ class PortfolioActivity : AppCompatActivity(), ProjectListener {
             }
     }
 
-    override fun onProjectClick(project: NewProject) {
-        val launcherIntent = Intent(this, ProjectActivity::class.java)
-        launcherIntent.putExtra("project_edit", project)
-        launcherIntent.putExtra("portfolio_edit", portfolio)
-        refreshIntentLauncher.launch(launcherIntent)
-    }
 
-    private fun registerRefreshCallback() {
-        refreshIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { loadProjects() }
-    }
 
-    private fun loadProjects() {
-        if (intent.hasExtra("portfolio_edit")) {
-            portfolio = intent.extras?.getParcelable("portfolio_edit")!!
-        }
 
-        var portfolioProjects = portfolio.projects
-        println("portfolio: $portfolio")
-        println("portfolioProjects: $portfolioProjects")
-        if (portfolioProjects != null) {
-            showProjects(portfolioProjects.toList())
-        }
-    }
 
-    fun showProjects (projects: List<NewProject>) {
-        binding.projectRecyclerView.adapter = ProjectAdapter(projects, this)
-        binding.projectRecyclerView.adapter?.notifyDataSetChanged()
-    }
+
+
+
+
+
 
 }
