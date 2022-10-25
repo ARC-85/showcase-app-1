@@ -38,5 +38,8 @@
     <string name="project_description_placeholder">Project Description</string>
     <string name="menu_viewProjects">View Projects</string>
     <string name="portfolio_projectList">List of Projects</string>
+    <string name="title_activity_project_list">ProjectListActivity</string>
+    <string name="button_goToProjects">Go To Projects</string>
+
 
 </resources>

@@ -147,21 +147,8 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/portfolioProjects"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/alata"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:inputType="none"
-                    android:textColor="#2AA599"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:text="@string/portfolio_projectList"/>
-
                 <Button
-                    android:id="@+id/btnNewProject"
+                    android:id="@+id/btnGoToProjects"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -169,17 +156,10 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
-                    android:text="@string/new_project"
+                    android:text="@string/button_goToProjects"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/projectRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="vertical"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             </LinearLayout>
 
