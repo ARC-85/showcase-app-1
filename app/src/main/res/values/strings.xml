@@ -37,9 +37,26 @@
     <string name="project_title_placeholder">Project Title</string>
     <string name="project_description_placeholder">Project Description</string>
     <string name="menu_viewProjects">View Projects</string>
-    <string name="portfolio_projectList">List of Projects</string>
+    <string name="portfolio_projectList">Projects for Portfolio:</string>
     <string name="title_activity_project_list">ProjectListActivity</string>
     <string name="button_goToProjects">Go To Projects</string>
+    <string name="title_portfolioName">Portfolio</string>
+    <string name="selected_item">Selected item:</string>
+    <string-array name="menu_portfolioTypes">
+        <item>New Build</item>
+        <item>Renovation</item>
+        <item>Interiors</item>
+        <item>Landscaping</item>
+        <item>Commercial</item>
+    </string-array>
+    <string name="portfolio_type_label">Portfolio Type</string>
+    <string name="btn_filter">Filter Portfolio Types</string>
+    <string name="project_budget_label">Project Budget</string>
+    <string name="btn_budget_filter">Filter Project Budgets</string>
+    <string name="portfolio_filter_label">Filter Portfolio Types</string>
+    <string name="new_project_label">New Project</string>
+
+
 
 
 </resources>

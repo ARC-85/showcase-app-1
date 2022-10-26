@@ -42,6 +42,7 @@ class ProjectAdapter constructor(private var projects: List<NewProject>,
         fun bind(project: NewProject, listener: ProjectListener) {
 
             binding.projectTitle.text = project.projectTitle
+            binding.projectBudget.text = project.projectBudget
             binding.projectDescription.text = project.projectDescription
             Picasso.get().load(project.projectImage).resize(200,200).into(binding.projectImageIcon)
             binding.root.setOnClickListener { listener.onProjectClick(project) }

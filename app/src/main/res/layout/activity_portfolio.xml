@@ -38,6 +38,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
@@ -65,21 +66,21 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:textColor="#2AA599"
-                    android:textStyle="bold"
                     android:id="@+id/editPortfolioDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/edit_portfolio_details" />
+                    android:text="@string/edit_portfolio_details"
+                    android:textColor="#2AA599"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:textColor="#2AA599"
                     android:id="@+id/portfolioTitleLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/portfolio_title_label" />
+                    android:text="@string/portfolio_title_label"
+                    android:textColor="#2AA599" />
 
                 <EditText
                     android:id="@+id/portfolioTitle"
@@ -96,12 +97,12 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:textColor="#2AA599"
                     android:id="@+id/portfolioDescriptionLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="@string/portfolio_description_label" />
+                    android:text="@string/portfolio_description_label"
+                    android:textColor="#2AA599" />
 
                 <EditText
                     android:id="@+id/description"
@@ -116,27 +117,40 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
+                <TextView
+                    android:id="@+id/portfolioTypeLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/portfolio_type_label"
+                    android:textColor="#2AA599" />
+
+                <Spinner
+                    android:id="@+id/portfolioTypeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/chooseImage"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
-                    android:paddingBottom="8dp"
                     android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="@string/button_addImage"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/portfolioImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_launcher"/>
+                    app:srcCompat="@mipmap/ic_launcher" />
 
                 <Button
                     android:id="@+id/btnAdd"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
@@ -149,10 +163,11 @@
 
                 <Button
                     android:id="@+id/btnGoToProjects"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
+                    android:gravity="center|center_horizontal"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"

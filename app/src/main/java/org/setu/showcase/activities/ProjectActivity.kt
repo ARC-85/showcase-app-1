@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.DatePicker
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -39,6 +37,9 @@ class ProjectActivity : AppCompatActivity() {
     var dateDay = today.get(Calendar.DAY_OF_MONTH)
     var dateMonth = today.get(Calendar.MONTH)
     var dateYear = today.get(Calendar.YEAR)
+    var currentLocation = Location()
+    val projectBudgets = arrayOf("€0-€50K", "€50K-€100K", "€100K-€250K", "€250K-€500K", "€500K-€1M", "€1M+")
+    var projectBudget = ""
 
 
     //val portfolioId=intent.getLongExtra("portfolio_Id", 0)
@@ -62,6 +63,7 @@ class ProjectActivity : AppCompatActivity() {
         binding.projectLongitude.isVisible = false
         setSupportActionBar(binding.toolbarProject)
         binding.btnProjectAdd.isVisible = false
+        binding.projectName.isVisible = false
 
 
         app = application as MainApp
@@ -69,12 +71,21 @@ class ProjectActivity : AppCompatActivity() {
         if (intent.hasExtra("project_edit")) {
             edit = true
             project = intent.extras?.getParcelable("project_edit")!!
+            binding.projectName.text = project.projectTitle
+            binding.projectName.isVisible = true
             binding.projectTitle.setText(project.projectTitle)
-            binding.projectDescription.setText(project.projectDescription)
+            if (!intent.hasExtra("location")) {
+                binding.projectDescription.setText(project.projectDescription)
+                var formattedLatitude = String.format("%.2f", project.lat);
+                binding.projectLatitude.setText(formattedLatitude)
+                var formattedLongitude = String.format("%.2f", project.lng);
+                binding.projectLongitude.setText(formattedLongitude)
+            }
+            /*binding.projectDescription.setText(project.projectDescription)
             var formattedLatitude = String.format("%.2f", project.lat);
             binding.projectLatitude.setText(formattedLatitude)
             var formattedLongitude = String.format("%.2f", project.lng);
-            binding.projectLongitude.setText(formattedLongitude)
+            binding.projectLongitude.setText(formattedLongitude)*/
             binding.btnProjectAdd.setText(R.string.save_project)
             binding.btnProjectAdd.isVisible = false
             binding.projectLatitude.isVisible = true
@@ -95,6 +106,7 @@ class ProjectActivity : AppCompatActivity() {
             project.projectCompletionDay = dateDay
             project.projectCompletionMonth = dateMonth
             project.projectCompletionYear = dateYear
+            project.projectBudget = projectBudget
             project.portfolioId = portfolio.id
 
             if (project.projectTitle.isEmpty()) {
@@ -117,8 +129,8 @@ class ProjectActivity : AppCompatActivity() {
             }
             setResult(RESULT_OK)
             //finish()
-            val intent = Intent(this, PortfolioListActivity::class.java)
-
+            val intent = Intent(this, ProjectListActivity::class.java)
+            intent.putExtra("project_addition", portfolio)
             startActivity(intent)
             /*val intent = Intent(this, PortfolioActivity::class.java)
             intent.putExtra("portfolio_edit", portfolio)
@@ -180,6 +192,40 @@ class ProjectActivity : AppCompatActivity() {
             println("this is dateProjectCompletion: $dateProjectCompletion")
         }
 
+        val spinner = findViewById<Spinner>(R.id.projectBudgetSpinner)
+
+
+        if (edit) {
+            projectBudget = project.projectBudget
+        }
+
+        if (spinner != null) {
+            val adapter = ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, projectBudgets)
+            spinner.adapter = adapter
+            if (projectBudget != null) {
+                val spinnerPosition = adapter.getPosition(projectBudget)
+                spinner.setSelection(spinnerPosition)
+            }
+
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    projectBudget = projectBudgets[position]
+                    Toast.makeText(this@ProjectActivity,
+                        getString(R.string.selected_item) + " " +
+                                "" + projectBudgets[position], Toast.LENGTH_SHORT).show()
+                    projectBudget = projectBudgets[position]
+                    println("this is portfolioType: $projectBudget")
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+
+                }
+            }
+        }
+
         registerMapCallback()
 
 
@@ -196,7 +242,7 @@ class ProjectActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cancel -> {
-                val intent = Intent(this, PortfolioActivity::class.java)
+                val intent = Intent(this, ProjectListActivity::class.java)
                 intent.putExtra("portfolio_edit", portfolio)
                 startActivity(intent)
             }
@@ -204,8 +250,10 @@ class ProjectActivity : AppCompatActivity() {
                 if (intent.hasExtra("project_edit")) {
                     project = intent.extras?.getParcelable("project_edit")!!
                     println("this is the delete project: $project")
+                    portfolio =  app.portfolios.findPortfolio(portfolio)!!
                     app.portfolios.deleteProject(project, portfolio)
-                    val intent = Intent(this, PortfolioListActivity::class.java)
+                    val intent = Intent(this, ProjectListActivity::class.java)
+                    intent.putExtra("project_addition", portfolio)
                     startActivity(intent)
                 }
 
@@ -217,6 +265,7 @@ class ProjectActivity : AppCompatActivity() {
                 project.projectCompletionMonth = dateMonth
                 project.projectCompletionYear = dateYear
                 project.portfolioId = portfolio.id
+                project.projectBudget = projectBudget
 
                 if (project.projectTitle.isEmpty()) {
                     Snackbar.make(findViewById(android.R.id.content),R.string.enter_project_title, Snackbar.LENGTH_LONG)
@@ -225,12 +274,14 @@ class ProjectActivity : AppCompatActivity() {
                     if (edit) {
                         app.portfolios.updateProject(project.copy(), portfolio)
                         setResult(RESULT_OK)
-                        val intent = Intent(this, PortfolioListActivity::class.java)
+                        val intent = Intent(this, ProjectListActivity::class.java)
+                        intent.putExtra("project_addition", portfolio)
                         startActivity(intent)
                     } else {
                         app.portfolios.createProject(project.copy(), portfolio)
                         setResult(RESULT_OK)
-                        val intent = Intent(this, PortfolioListActivity::class.java)
+                        val intent = Intent(this, ProjectListActivity::class.java)
+                        intent.putExtra("project_addition", portfolio)
                         startActivity(intent)
                     }
                 }
@@ -272,6 +323,10 @@ class ProjectActivity : AppCompatActivity() {
                             project.lat = location.lat
                             project.lng = location.lng
                             project.zoom = location.zoom
+                            var formattedLatitude = String.format("%.2f", location.lat);
+                            binding.projectLatitude.setText(formattedLatitude)
+                            var formattedLongitude = String.format("%.2f", location.lng);
+                            binding.projectLongitude.setText(formattedLongitude)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

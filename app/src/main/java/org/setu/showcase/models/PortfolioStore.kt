@@ -12,4 +12,6 @@ interface PortfolioStore {
     fun deleteProject(project: NewProject, portfolio: PortfolioModel)
     fun findProjects(): List<NewProject>
     fun findProject(id: Long): NewProject?
+    fun findPortfolio(portfolio: PortfolioModel): PortfolioModel?
+    fun findSpecificPortfolios(portfolioType: String): List<PortfolioModel>
 }

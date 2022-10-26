@@ -36,6 +36,7 @@ class PortfolioAdapter constructor(private var portfolios: List<PortfolioModel>,
         fun bind(portfolio: PortfolioModel, listener: PortfolioListener) {
             binding.portfolioTitle.text = portfolio.title
             binding.portfolioDescription.text = portfolio.description
+            binding.portfolioType.text = portfolio.type
             Picasso.get().load(portfolio.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onPortfolioClick(portfolio) }
         }

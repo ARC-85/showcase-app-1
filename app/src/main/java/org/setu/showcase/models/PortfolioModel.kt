@@ -8,6 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class PortfolioModel(var id: Long = 0,
                           var title: String = "",
                           var description: String = "",
+                          var type: String = "",
                           var image: Uri = Uri.EMPTY,
 var projects: Array<NewProject>? = null) : Parcelable
 
@@ -22,7 +23,8 @@ data class NewProject(var projectId: Long = 0,
                           var zoom: Float = 0f,
                       var projectCompletionDay: Int = 1,
                       var projectCompletionMonth: Int = 1,
-                      var projectCompletionYear: Int = 1900) : Parcelable
+                      var projectCompletionYear: Int = 1900,
+                      var projectBudget: String = "") : Parcelable
 
 @Parcelize
 data class Location(var lat: Double = 0.0,
