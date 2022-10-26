@@ -72,6 +72,11 @@ class PortfolioMemStore : PortfolioStore {
         return projects.find { p -> p.projectId == id }
     }
 
+    override fun findPortfolio(portfolio: PortfolioModel): PortfolioModel? {
+        logAll()
+        return portfolios.find { p -> p.id == portfolio.id }
+    }
+
     /*override fun findPortfolioProjects(portfolio: PortfolioModel): List<NewProject> {
         var foundPortfolio: PortfolioModel? = portfolios.find { p -> p.id == portfolio.id }
         if (foundPortfolio != null) {
@@ -95,6 +100,13 @@ class PortfolioMemStore : PortfolioStore {
             return projects.filter { p -> p.portfolioId == foundPortfolio.id }
         }
         return projects
+    }
+
+    override fun findSpecificPortfolios(portfolioType: String): MutableList<PortfolioModel> {
+        var list = portfolios.filter { p -> p.type == portfolioType }
+        return list.toMutableList()
+        logAll()
+        return portfolios
     }
 
     override fun createProject(project: NewProject, portfolio: PortfolioModel) {

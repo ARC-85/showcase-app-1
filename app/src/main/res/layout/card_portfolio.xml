@@ -40,7 +40,7 @@
             tools:text="A Title" />
 
         <TextView
-            android:id="@+id/portfolioDescription"
+            android:id="@+id/portfolioType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -49,6 +49,18 @@
             app:layout_constraintHorizontal_bias="0.052"
             app:layout_constraintStart_toEndOf="@+id/imageIcon"
             app:layout_constraintTop_toBottomOf="@id/portfolioTitle"
+            tools:text="Portfolio Type" />
+
+        <TextView
+            android:id="@+id/portfolioDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.052"
+            app:layout_constraintStart_toEndOf="@+id/imageIcon"
+            app:layout_constraintTop_toBottomOf="@id/portfolioType"
             tools:text="A Description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

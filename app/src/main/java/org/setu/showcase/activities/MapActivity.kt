@@ -22,6 +22,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
 
     private lateinit var map: GoogleMap
     var location = Location()
+    var project = NewProject()
 
 
 

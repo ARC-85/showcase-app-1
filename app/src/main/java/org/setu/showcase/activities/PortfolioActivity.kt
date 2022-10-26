@@ -2,25 +2,25 @@ package org.setu.showcase.activities
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.setu.showcase.R
-import org.setu.showcase.adapters.PortfolioAdapter
 import org.setu.showcase.databinding.ActivityPortfolioBinding
 import org.setu.showcase.helpers.showImagePicker
 import org.setu.showcase.main.MainApp
 import org.setu.showcase.models.PortfolioModel
-import org.setu.showcase.models.NewProject
-import org.setu.showcase.adapters.ProjectAdapter
-import org.setu.showcase.adapters.ProjectListener
 import timber.log.Timber.i
 
 class PortfolioActivity : AppCompatActivity() {
@@ -29,7 +29,9 @@ class PortfolioActivity : AppCompatActivity() {
     var portfolio = PortfolioModel()
     lateinit var app: MainApp
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    val portfolioTypes = arrayOf("New Builds", "Renovations", "Interiors", "Landscaping", "Commercial", "Other")
     var edit = false
+    var portfolioType = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +81,8 @@ class PortfolioActivity : AppCompatActivity() {
 
             portfolio.title = binding.portfolioTitle.text.toString()
             portfolio.description = binding.description.text.toString()
+            println("this is passed portfolio type: $portfolioType")
+            portfolio.type = portfolioType
             if (portfolio.title.isEmpty()) {
                 Snackbar.make(it,R.string.enter_portfolio_title, Snackbar.LENGTH_LONG)
                     .show()
@@ -112,11 +116,39 @@ class PortfolioActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        /*binding.btnPortfolioDelete.setOnClickListener() {
-            app.portfolios.delete(portfolio)
-            val intent = Intent(this, PortfolioListActivity::class.java)
-            startActivity(intent)
-        }*/
+        val spinner = findViewById<Spinner>(R.id.portfolioTypeSpinner)
+
+
+        if (edit) {
+            portfolioType = portfolio.type
+        }
+
+        if (spinner != null) {
+            val adapter = ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, portfolioTypes)
+            spinner.adapter = adapter
+            if (portfolioType != null) {
+                val spinnerPosition = adapter.getPosition(portfolioType)
+                spinner.setSelection(spinnerPosition)
+            }
+
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    portfolioType = portfolioTypes[position]
+                    Toast.makeText(this@PortfolioActivity,
+                        getString(R.string.selected_item) + " " +
+                                "" + portfolioTypes[position], Toast.LENGTH_SHORT).show()
+                    portfolioType = portfolioTypes[position]
+                    println("this is portfolioType: $portfolioType")
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+
+                }
+            }
+        }
 
 
 
@@ -152,6 +184,8 @@ class PortfolioActivity : AppCompatActivity() {
             R.id.item_portfolio_save -> {
                 portfolio.title = binding.portfolioTitle.text.toString()
                 portfolio.description = binding.description.text.toString()
+                println("this is passed portfolio type: $portfolioType")
+                portfolio.type = portfolioType
                 if (portfolio.title.isEmpty()) {
                     Snackbar.make(findViewById(android.R.id.content),R.string.enter_portfolio_title, Snackbar.LENGTH_LONG)
                         .show()

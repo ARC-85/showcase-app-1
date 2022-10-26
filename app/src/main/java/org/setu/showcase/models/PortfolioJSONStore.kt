@@ -55,6 +55,11 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
         return projects.find { p -> p.projectId == id }
     }
 
+    override fun findPortfolio(portfolio: PortfolioModel): PortfolioModel? {
+        logAll()
+        return portfolios.find { p -> p.id == portfolio.id }
+    }
+
     override fun create(portfolio: PortfolioModel) {
         portfolio.id = generateRandomId()
         portfolios.add(portfolio)
@@ -68,6 +73,7 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
             foundPortfolio.description = portfolio.description
             foundPortfolio.image = portfolio.image
             foundPortfolio.projects = portfolio.projects
+            foundPortfolio.type = portfolio.type
             serialize()
         }
     }
@@ -116,6 +122,14 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
         }
         logAllProjects()
         return projects
+    }
+
+    override fun findSpecificPortfolios(portfolioType: String): MutableList<PortfolioModel> {
+        var list = portfolios.filter { p -> p.type == portfolioType }
+        return list.toMutableList()
+        println("this is list: $list")
+        logAll()
+        return portfolios
     }
 
     override fun createProject(project: NewProject, portfolio: PortfolioModel) {
@@ -175,8 +189,8 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
 
                 foundPortfolio.projects = ArrayList(portfolioProjects).toTypedArray()
 
-            } else
-                serialize()
+            }
+            serialize()
         }
     }
 

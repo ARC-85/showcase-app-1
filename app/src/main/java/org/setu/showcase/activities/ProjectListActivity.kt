@@ -5,6 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
@@ -34,6 +39,7 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
     lateinit var app: MainApp
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     var edit = false
+    val projectBudgets = arrayOf("Show All", "€0-€50K", "€50K-€100K", "€100K-€250K", "€250K-€500K", "€500K-€1M", "€1M+")
 
 
     private lateinit var binding: ActivityProjectListBinding
@@ -45,18 +51,45 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
 
         binding = ActivityProjectListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbarProjectList.title = "List of Projects"
+        binding.toolbarProjectList.title = "Projects"
         binding.btnNewProject.isVisible = false
+        binding.btnBudgetFilter.isVisible = false
 
 
         setSupportActionBar(binding.toolbarProjectList)
         app = application as MainApp
-        //loadProjects()
+
+        var projectBudget = "Show All"
 
         if (intent.hasExtra("portfolio_edit")) {
             edit = true
             portfolio = intent.extras?.getParcelable("portfolio_edit")!!
             println(portfolio)
+            binding.portfolioName.text = portfolio.title
+
+            binding.btnNewProject.isVisible = true
+
+
+            val layoutManager = LinearLayoutManager(this)
+            binding.projectRecyclerView.layoutManager = layoutManager
+            if (projectBudget == "Show All")
+            {
+                loadProjects()
+            } else {
+                loadSpecificBudgetProjects(projectBudget)
+            }
+            // binding.projectRecyclerView.adapter = ProjectAdapter(app.portfolios.findSpecificProjects(portfolio),this)
+
+
+
+        }
+
+        if (intent.hasExtra("project_addition")) {
+            edit = true
+            portfolio = intent.extras?.getParcelable("project_addition")!!
+            portfolio =  app.portfolios.findPortfolio(portfolio)!!
+            println(portfolio)
+            binding.portfolioName.text = portfolio.title
 
             binding.btnNewProject.isVisible = true
 
@@ -84,6 +117,54 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
             val intent = Intent(this, PortfolioListActivity::class.java)
             startActivity(intent)
         }*/
+        binding.btnBudgetFilter.setOnClickListener() {
+            /*val intent = Intent(this, PortfolioListActivity::class.java)
+            println("this is passed portfolioType: $portfolioType")
+            intent.putExtra("portfolio_filter", portfolioType)
+            startActivity(intent)*/
+            if (projectBudget == "Show All") {
+                loadProjects()
+            } else {
+                loadSpecificBudgetProjects(projectBudget)
+            }
+
+        }
+
+        val spinner = findViewById<Spinner>(R.id.projectBudgetSpinner)
+
+        if (spinner != null) {
+            val adapter = ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, projectBudgets)
+            spinner.adapter = adapter
+            if (projectBudget != null) {
+                val spinnerPosition = adapter.getPosition(projectBudget)
+                spinner.setSelection(spinnerPosition)
+            }
+
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    projectBudget = projectBudgets[position]
+                    Toast.makeText(this@ProjectListActivity,
+                        getString(R.string.selected_item) + " " +
+                                "" + projectBudgets[position], Toast.LENGTH_SHORT).show()
+                    projectBudget = projectBudgets[position]
+                    println("this is portfolioType: $projectBudget")
+                    if (projectBudget == "Show All") {
+                        loadProjects()
+                    } else {
+                        loadSpecificBudgetProjects(projectBudget)
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+
+                }
+            }
+        }
+
+
 
 
 
@@ -132,6 +213,21 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
         println("portfolioProjects: $portfolioProjects")
         if (portfolioProjects != null) {
             showProjects(portfolioProjects.toList())
+        }
+    }
+
+    private fun loadSpecificBudgetProjects(projectBudget: String) {
+        if (intent.hasExtra("portfolio_edit")) {
+            portfolio = intent.extras?.getParcelable("portfolio_edit")!!
+        }
+
+        var portfolioProjects = portfolio.projects
+        println("portfolio: $portfolio")
+        println("portfolioProjects: $portfolioProjects")
+        if (portfolioProjects != null) {
+            var portfolioProjectList = portfolioProjects.toList()
+            var specificPortfolioProjectList = portfolioProjectList.filter { p -> p.projectBudget == projectBudget }
+                showProjects(specificPortfolioProjectList)
         }
     }
 
