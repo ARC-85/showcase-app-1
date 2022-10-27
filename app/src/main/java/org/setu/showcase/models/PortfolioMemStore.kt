@@ -109,6 +109,18 @@ class PortfolioMemStore : PortfolioStore {
         return portfolios
     }
 
+    override fun findSpecificTypeProjects(portfolioType: String): MutableList<NewProject> {
+        var list = portfolios.filter { p -> p.type == portfolioType }
+        println("this is list: $list")
+        list.forEach { Timber.i("$it")
+            var portfolioTypeProjects = it.projects
+            if (portfolioTypeProjects != null) {
+                projects += portfolioTypeProjects.toMutableList()
+            }
+        }
+        return projects
+    }
+
     override fun createProject(project: NewProject, portfolio: PortfolioModel) {
         project.projectId = getProjectId()
         projects.add(project)

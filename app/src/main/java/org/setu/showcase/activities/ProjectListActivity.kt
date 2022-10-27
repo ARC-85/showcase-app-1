@@ -160,6 +160,7 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
 
+
                 }
             }
         }

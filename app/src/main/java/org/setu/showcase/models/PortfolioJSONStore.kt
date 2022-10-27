@@ -99,8 +99,8 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
     }
 
     private fun logProjects() {
-        portfolios.forEach { Timber.i("$it")
-            var portfolioProjects = it.projects
+        portfolios.forEach {
+            var portfolioProjects = it.projects?.toMutableList()
             if (portfolioProjects != null) {
                 projects += portfolioProjects.toMutableList()
             }
@@ -132,6 +132,25 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
         return portfolios
     }
 
+    override fun findSpecificTypeProjects(portfolioType: String): MutableList<NewProject> {
+        var list = portfolios.filter { p -> p.type == portfolioType }
+
+        println("this is list: $list")
+
+        list.forEach {
+            println("project item: " + it.projects?.toMutableList())
+            //projects += it.projects
+            var portfolioTypeProjects = it.projects?.toMutableList()
+            println("this is portfolioTypeProject: $portfolioTypeProjects")
+            if (portfolioTypeProjects != null) {
+                portfolioTypeProjects += portfolioTypeProjects.toMutableList()
+                projects = portfolioTypeProjects.toMutableList()
+            }
+        }
+        println("this is final returned projects: $projects")
+        return projects
+    }
+
     override fun createProject(project: NewProject, portfolio: PortfolioModel) {
         project.projectId = generateRandomId()
         projects.add(project)
@@ -150,7 +169,6 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
             serialize()
         }
     }
-
 
     override fun updateProject(project: NewProject, portfolio: PortfolioModel) {
         var foundProject: NewProject? = projects.find { p -> p.projectId == project.projectId }
