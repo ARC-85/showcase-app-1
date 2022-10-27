@@ -104,7 +104,7 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
         }
 
 
-
+        binding.btnNewProject.isVisible = false
         binding.btnNewProject.setOnClickListener() {
             val launcherIntent = Intent(this, ProjectActivity::class.java)
 
@@ -183,6 +183,12 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
                 val intent = Intent(this, PortfolioActivity::class.java)
                 intent.putExtra("portfolio_edit", portfolio)
                 startActivity(intent)
+            }
+            R.id.item_add -> {
+                val launcherIntent = Intent(this, ProjectActivity::class.java)
+
+                launcherIntent.putExtra("portfolio_edit", portfolio)
+                refreshIntentLauncher.launch(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)

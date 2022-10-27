@@ -158,6 +158,8 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
             foundProject.projectTitle = project.projectTitle
             foundProject.projectDescription = project.projectDescription
             foundProject.projectImage = project.projectImage
+            foundProject.projectImage2 = project.projectImage2
+            foundProject.projectImage3 = project.projectImage3
             foundProject.lat = project.lat
             foundProject.lng = project.lng
             foundProject.zoom = project.zoom
