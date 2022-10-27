@@ -19,6 +19,7 @@ import org.setu.showcase.adapters.PortfolioAdapter
 import org.setu.showcase.adapters.PortfolioListener
 import org.setu.showcase.databinding.ActivityPortfolioListBinding
 import org.setu.showcase.main.MainApp
+import org.setu.showcase.models.NewProject
 import org.setu.showcase.models.PortfolioModel
 
 class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
@@ -28,9 +29,8 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     val portfolioTypes = arrayOf("Show All", "New Builds", "Renovations", "Interiors", "Landscaping", "Commercial", "Other")
-
-
-
+    var mapProjects = mutableListOf<NewProject>()
+    var portfolioType = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +41,7 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
         app = application as MainApp
         binding.btnFilter.isVisible = false
 
-        var portfolioType = "Show All"
-
-
-
-        /*if (intent.hasExtra("portfolio_filter")) {
-            portfolioType = intent.extras?.getParcelable("portfolio_filter")!!
-        }*/
+        portfolioType = "Show All"
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
@@ -57,8 +51,6 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
             loadSpecificPortfolios(portfolioType)
         }
 
-
-        //registerRefreshCallback()
         registerMapCallback()
 
         val spinner = findViewById<Spinner>(R.id.portfolioTypeSpinner)
@@ -84,8 +76,12 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
                     println("this is portfolioType: $portfolioType")
                     if (portfolioType == "Show All") {
                         loadPortfolios()
+                        mapProjects = app.portfolios.findProjects().toMutableList()
+                        println("this is show all mapProjects: $mapProjects")
                     } else {
                         loadSpecificPortfolios(portfolioType)
+                        mapProjects = app.portfolios.findSpecificTypeProjects(portfolioType)
+                        println("this is specific mapProjects: $mapProjects")
                     }
 
                 }
@@ -98,10 +94,6 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
         }
 
         binding.btnFilter.setOnClickListener() {
-            /*val intent = Intent(this, PortfolioListActivity::class.java)
-            println("this is passed portfolioType: $portfolioType")
-            intent.putExtra("portfolio_filter", portfolioType)
-            startActivity(intent)*/
             if (portfolioType == "Show All") {
                 loadPortfolios()
             } else {
@@ -124,36 +116,22 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
             }
             R.id.item_map -> {
                 val launcherIntent = Intent(this, ProjectMapsActivity::class.java)
+                    .putExtra("portfolio_type", portfolioType)
                 mapIntentLauncher.launch(launcherIntent)
+                /*val intent = Intent(this, ProjectMapsActivity::class.java)
+                intent.putExtra("portfolio_type", portfolioType)
+                startActivity(intent)*/
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onPortfolioClick(portfolio: PortfolioModel) {
-        /*val launcherIntent = Intent(this, PortfolioActivity::class.java)
-        launcherIntent.putExtra("portfolio_edit", portfolio)
-        refreshIntentLauncher.launch(launcherIntent)*/
         val intent = Intent(this, PortfolioActivity::class.java)
         println("this is passed portfolio: $portfolio")
         intent.putExtra("portfolio_edit", portfolio)
         startActivity(intent)
     }
-
-    /*private fun registerRefreshCallback() {
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-        //{ loadSpecificPortfolios(portfolioType) }
-        { loadPortfolios() }
-        /*refreshIntentLauncher = if (portfolioType == "Show ALl") {
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            //{ loadSpecificPortfolios(portfolioType) }
-            { loadPortfolios() }
-        } else {
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { loadSpecificPortfolios(portfolioType) }
-        }*/
-
-    }*/
 
     private fun registerMapCallback() {
         mapIntentLauncher =
@@ -175,6 +153,5 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
         binding.recyclerView.adapter = PortfolioAdapter(portfolios, this)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
-
 
 }

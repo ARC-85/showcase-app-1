@@ -14,4 +14,5 @@ interface PortfolioStore {
     fun findProject(id: Long): NewProject?
     fun findPortfolio(portfolio: PortfolioModel): PortfolioModel?
     fun findSpecificPortfolios(portfolioType: String): List<PortfolioModel>
+    fun findSpecificTypeProjects(portfolioType: String): MutableList<NewProject>
 }

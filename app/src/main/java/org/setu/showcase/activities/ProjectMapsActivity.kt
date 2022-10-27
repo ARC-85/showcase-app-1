@@ -3,6 +3,7 @@ package org.setu.showcase.activities
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -12,6 +13,7 @@ import com.squareup.picasso.Picasso
 import org.setu.showcase.databinding.ActivityProjectMapsBinding
 import org.setu.showcase.databinding.ContentProjectMapsBinding
 import org.setu.showcase.main.MainApp
+import org.setu.showcase.models.Location
 
 
 class ProjectMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
@@ -20,13 +22,19 @@ class ProjectMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener
     private lateinit var contentBinding: ContentProjectMapsBinding
     lateinit var map: GoogleMap
     lateinit var app: MainApp
+    var portfolioType = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = application as MainApp
         binding = ActivityProjectMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbar.title = "Map of All Projects"
+        portfolioType = intent.getStringExtra("portfolio_type")!!
+        if (portfolioType == "Show All") {
+            binding.toolbar.title = "Map of All Projects"
+        } else {
+            binding.toolbar.title = "Map of $portfolioType Projects"
+        }
         setSupportActionBar(binding.toolbar)
         contentBinding = ContentProjectMapsBinding.bind(binding.root)
         contentBinding.mapView.onCreate(savedInstanceState)
@@ -34,18 +42,33 @@ class ProjectMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener
             map = it
             configureMap()
         }
+
+
+
+
+        println("this is maps portfolioType: $portfolioType")
     }
 
     fun configureMap() {
         map.setOnMarkerClickListener(this)
         map.uiSettings.setZoomControlsEnabled(true)
         println("this is findProjects: " + app.portfolios.findProjects())
-        app.portfolios.findProjects().forEach {
-            val loc = LatLng(it.lat, it.lng)
-            val options = MarkerOptions().title(it.projectTitle).position(loc)
-            map.addMarker(options)?.tag = it.projectId
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+        if (portfolioType == "Show All") {
+            app.portfolios.findProjects().forEach {
+                val loc = LatLng(it.lat, it.lng)
+                val options = MarkerOptions().title(it.projectTitle).position(loc)
+                map.addMarker(options)?.tag = it.projectId
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+            }
+        } else {
+            app.portfolios.findSpecificTypeProjects(portfolioType).forEach {
+                val loc = LatLng(it.lat, it.lng)
+                val options = MarkerOptions().title(it.projectTitle).position(loc)
+                map.addMarker(options)?.tag = it.projectId
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+            }
         }
+
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
