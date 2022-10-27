@@ -52,9 +52,15 @@
     <string name="portfolio_type_label">Portfolio Type</string>
     <string name="btn_filter">Filter Portfolio Types</string>
     <string name="project_budget_label">Project Budget</string>
+    <string name="project_title_label">Project Title</string>
+    <string name="project_description_label">Project Description</string>
+    <string name="project_location_label">Project Location</string>
+    <string name="project_images_label">Project Images</string>
+    <string name="project_completion_label">Project Completion Date</string>
     <string name="btn_budget_filter">Filter Project Budgets</string>
     <string name="portfolio_filter_label">Filter Portfolio Types</string>
     <string name="new_project_label">New Project</string>
+    <string name="portfolio_image_label">Portfolio Image</string>
 
 
 

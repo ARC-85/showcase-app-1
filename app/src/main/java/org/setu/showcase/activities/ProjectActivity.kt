@@ -30,6 +30,8 @@ import java.util.Objects.toString
 class ProjectActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProjectBinding
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var image2IntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var image3IntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var project = NewProject()
     var edit = false
@@ -37,21 +39,17 @@ class ProjectActivity : AppCompatActivity() {
     var dateDay = today.get(Calendar.DAY_OF_MONTH)
     var dateMonth = today.get(Calendar.MONTH)
     var dateYear = today.get(Calendar.YEAR)
-    var currentLocation = Location()
     val projectBudgets = arrayOf("€0-€50K", "€50K-€100K", "€100K-€250K", "€250K-€500K", "€500K-€1M", "€1M+")
     var projectBudget = ""
 
-
-    //val portfolioId=intent.getLongExtra("portfolio_Id", 0)
     var portfolio = PortfolioModel()
-    //var location = Location(52.245696, -7.139102, 15f)
+
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
 
     lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         portfolio = intent.extras?.getParcelable("portfolio_edit")!!
         registerImagePickerCallback()
@@ -64,22 +62,31 @@ class ProjectActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarProject)
         binding.btnProjectAdd.isVisible = false
         binding.projectName.isVisible = false
-
+        binding.chooseImage2.isVisible = false
+        binding.projectImage2.isVisible = false
+        binding.chooseImage3.isVisible = false
+        binding.projectImage3.isVisible = false
 
         app = application as MainApp
+
+        if (!intent.hasExtra("location")) {
+            binding.projectLatitude.isVisible = true
+            binding.projectLongitude.isVisible = true
+        }
 
         if (intent.hasExtra("project_edit")) {
             edit = true
             project = intent.extras?.getParcelable("project_edit")!!
             binding.projectName.text = project.projectTitle
             binding.projectName.isVisible = true
+            binding.newProjectLabel.isVisible = false
             binding.projectTitle.setText(project.projectTitle)
             if (!intent.hasExtra("location")) {
                 binding.projectDescription.setText(project.projectDescription)
                 var formattedLatitude = String.format("%.2f", project.lat);
-                binding.projectLatitude.setText(formattedLatitude)
+                binding.projectLatitude.setText("Latitude: $formattedLatitude")
                 var formattedLongitude = String.format("%.2f", project.lng);
-                binding.projectLongitude.setText(formattedLongitude)
+                binding.projectLongitude.setText("Longitude: $formattedLongitude")
             }
             /*binding.projectDescription.setText(project.projectDescription)
             var formattedLatitude = String.format("%.2f", project.lat);
@@ -93,9 +100,33 @@ class ProjectActivity : AppCompatActivity() {
 
             Picasso.get()
                 .load(project.projectImage)
+                .centerCrop()
+                .resize(450, 420)
                 .into(binding.projectImage)
             if (project.projectImage != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.button_changeImage)
+            }
+
+            Picasso.get()
+                .load(project.projectImage2)
+                .centerCrop()
+                .resize(450, 420)
+                .into(binding.projectImage2)
+            if (project.projectImage2 != Uri.EMPTY) {
+                binding.chooseImage2.isVisible = true
+                binding.projectImage2.isVisible = true
+                binding.chooseImage2.setText(R.string.button_changeImage)
+            }
+
+            Picasso.get()
+                .load(project.projectImage3)
+                .centerCrop()
+                .resize(450, 420)
+                .into(binding.projectImage3)
+            if (project.projectImage3 != Uri.EMPTY) {
+                binding.chooseImage3.isVisible = true
+                binding.projectImage3.isVisible = true
+                binding.chooseImage3.setText(R.string.button_changeImage)
             }
 
         }
@@ -144,6 +175,18 @@ class ProjectActivity : AppCompatActivity() {
 
         binding.chooseImage.setOnClickListener {
             showImagePicker(imageIntentLauncher)
+            binding.chooseImage2.isVisible = true
+            binding.projectImage2.isVisible = true
+        }
+
+        binding.chooseImage2.setOnClickListener {
+            showImagePicker(image2IntentLauncher)
+            binding.chooseImage3.isVisible = true
+            binding.projectImage3.isVisible = true
+        }
+
+        binding.chooseImage3.setOnClickListener {
+            showImagePicker(image3IntentLauncher)
         }
 
         binding.projectLocation.setOnClickListener {
@@ -193,7 +236,6 @@ class ProjectActivity : AppCompatActivity() {
         }
 
         val spinner = findViewById<Spinner>(R.id.projectBudgetSpinner)
-
 
         if (edit) {
             projectBudget = project.projectBudget
@@ -301,8 +343,48 @@ class ProjectActivity : AppCompatActivity() {
                             project.projectImage = result.data!!.data!!
                             Picasso.get()
                                 .load(project.projectImage)
+                                .centerCrop()
+                                .resize(450, 420)
                                 .into(binding.projectImage)
                             binding.chooseImage.setText(R.string.button_changeImage)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+        image2IntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            project.projectImage2 = result.data!!.data!!
+                            Picasso.get()
+                                .load(project.projectImage2)
+                                .centerCrop()
+                                .resize(450, 420)
+                                .into(binding.projectImage2)
+                            binding.chooseImage2.setText(R.string.button_changeImage)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+        image3IntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            project.projectImage3 = result.data!!.data!!
+                            Picasso.get()
+                                .load(project.projectImage3)
+                                .centerCrop()
+                                .resize(450, 420)
+                                .into(binding.projectImage3)
+                            binding.chooseImage3.setText(R.string.button_changeImage)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
@@ -324,9 +406,9 @@ class ProjectActivity : AppCompatActivity() {
                             project.lng = location.lng
                             project.zoom = location.zoom
                             var formattedLatitude = String.format("%.2f", location.lat);
-                            binding.projectLatitude.setText(formattedLatitude)
+                            binding.projectLatitude.setText("Latitude: $formattedLatitude")
                             var formattedLongitude = String.format("%.2f", location.lng);
-                            binding.projectLongitude.setText(formattedLongitude)
+                            binding.projectLongitude.setText("Longitude: $formattedLongitude")
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

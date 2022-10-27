@@ -80,6 +80,15 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
+                <TextView
+                    android:id="@+id/filterProjectBudgets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/btn_budget_filter"
+                    android:textColor="#2AA599"
+                    android:textStyle="bold" />
+
                 <Spinner
                     android:id="@+id/projectBudgetSpinner"
                     android:layout_width="match_parent"

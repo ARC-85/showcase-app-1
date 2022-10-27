@@ -8,6 +8,12 @@
         android:title="@string/menu_cancelPortfolio"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/item_add"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/menu_addProject"
+        app:showAsAction="always" />
+
     
 
 

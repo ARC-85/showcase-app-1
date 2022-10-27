@@ -49,7 +49,7 @@ class PortfolioActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbarPortfolio)
         app = application as MainApp
-        //loadProjects()
+
 
         if (intent.hasExtra("portfolio_edit")) {
             edit = true
@@ -70,6 +70,8 @@ class PortfolioActivity : AppCompatActivity() {
 
             Picasso.get()
                 .load(portfolio.image)
+                .resize(450, 420)
+                .centerCrop()
                 .into(binding.portfolioImage)
             if (portfolio.image != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.button_changeImage)
@@ -219,6 +221,8 @@ class PortfolioActivity : AppCompatActivity() {
                             portfolio.image = result.data!!.data!!
                             Picasso.get()
                                 .load(portfolio.image)
+                                .centerCrop()
+                                .resize(450, 420)
                                 .into(binding.portfolioImage)
                             binding.chooseImage.setText(R.string.button_changeImage)
                         } // end of if
