@@ -48,20 +48,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center_horizontal|center_vertical"
                     android:inputType="none"
                     android:paddingTop="6pt"
                     android:text="@string/portfolio_projectList"
                     android:textColor="@color/colorTitles"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/portfolioName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/cinzel"
                     android:gravity="center_horizontal|center_vertical"
                     android:inputType="none"
                     android:text="@string/title_portfolioName"
@@ -86,6 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:paddingTop="4dp"
                     android:fontFamily="@font/roboto"
                     android:text="@string/btn_budget_filter"
                     android:textColor="@color/colorSubTitles"
