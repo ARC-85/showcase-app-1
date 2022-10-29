@@ -5,13 +5,14 @@
 
     <item
         android:id="@+id/item_cancel"
+        android:icon="@android:drawable/ic_menu_revert"
         android:title="@string/menu_cancelPortfolio"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/item_portfolio_save"
         android:icon="@android:drawable/ic_menu_save"
-        android:title="@string/menu_project_delete"
+        android:title="@string/portfolio_save"
         app:showAsAction="always" />
 
     <item

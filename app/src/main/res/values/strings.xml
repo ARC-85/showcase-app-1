@@ -4,7 +4,7 @@
     <string name="hint_portfolioTitle">Portfolio Title</string>
     <string name="hint_portfolioDescription">Description </string>
     <string name="menu_addPortfolio">Add Portfolio</string>
-    <string name="menu_cancelPortfolio">Cancel</string>
+    <string name="menu_cancelPortfolio">Back</string>
     <string name="enter_portfolio_title"> Please enter a Portfolio Title </string>
     <string name="save_portfolio"> Save Portfolio </string>
     <string name="button_addImage"> Add Image </string>
@@ -61,6 +61,9 @@
     <string name="portfolio_filter_label">Filter Portfolio Types</string>
     <string name="new_project_label">New Project</string>
     <string name="portfolio_image_label">Portfolio Image</string>
+    <string name="project_save">Project Save</string>
+    <string name="portfolio_save">Portfolio Save</string>
+    <string name="project_portfolio_placeholder">Portfolio Title</string>
 
 
 

@@ -26,6 +26,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorAccentVariant"
+                app:titleTextAppearance="@style/MenuTextAppearance"
                 app:titleTextColor="@color/colorPrimary" />
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -46,20 +48,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/alata"
+                    android:fontFamily="@font/roboto_medium"
                     android:gravity="center_horizontal|center_vertical"
                     android:inputType="none"
+                    android:paddingTop="6pt"
                     android:text="@string/portfolios_label"
-                    android:textColor="#2AA599"
-                    android:textSize="20sp" />
+                    android:textColor="@color/colorTitles"
+                    android:textSize="34sp" />
 
                 <TextView
                     android:id="@+id/filterPortfolioTypes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/portfolio_filter_label"
-                    android:textColor="#2AA599"
+                    android:textColor="@color/colorSubTitles"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <Spinner
@@ -72,7 +77,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center|center_horizontal"
-                    android:text="@string/btn_filter" />
+                    android:text="@string/btn_filter"
+                    android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"

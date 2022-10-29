@@ -69,9 +69,9 @@ class PortfolioListActivity : AppCompatActivity(), PortfolioListener {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                     portfolioType = portfolioTypes[position]
-                    Toast.makeText(this@PortfolioListActivity,
+                    /*Toast.makeText(this@PortfolioListActivity,
                         getString(R.string.selected_item) + " " +
-                                "" + portfolioTypes[position], Toast.LENGTH_SHORT).show()
+                                "" + portfolioTypes[position], Toast.LENGTH_SHORT).show()*/
                     portfolioType = portfolioTypes[position]
                     println("this is portfolioType: $portfolioType")
                     if (portfolioType == "Show All") {

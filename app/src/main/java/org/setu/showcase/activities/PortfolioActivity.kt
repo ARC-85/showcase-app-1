@@ -42,8 +42,7 @@ class PortfolioActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarPortfolio.title = "Portfolio"
 
-        binding.portfolioName.isVisible = false
-        binding.newPortfolioLabel.isVisible = true
+
         binding.editPortfolioDetails.isVisible = false
         binding.btnAdd.isVisible = false
 
@@ -60,9 +59,6 @@ class PortfolioActivity : AppCompatActivity() {
             binding.description.setText(portfolio.description)
             binding.btnAdd.setText(R.string.save_portfolio)
             binding.btnAdd.isVisible = false
-
-            binding.portfolioName.isVisible = true
-            binding.newPortfolioLabel.isVisible = false
             binding.editPortfolioDetails.isVisible = true
 
 
