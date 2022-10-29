@@ -227,7 +227,7 @@ class ProjectActivity : AppCompatActivity() {
             dateDay = day
             dateMonth = month
             dateYear = year
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             println ("this is dateDay: $dateDay")
             println ("this is dateMonth: $dateMonth")
             println ("this is dateYear: $dateYear")
@@ -255,9 +255,9 @@ class ProjectActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                     projectBudget = projectBudgets[position]
-                    Toast.makeText(this@ProjectActivity,
+                    /*Toast.makeText(this@ProjectActivity,
                         getString(R.string.selected_item) + " " +
-                                "" + projectBudgets[position], Toast.LENGTH_SHORT).show()
+                                "" + projectBudgets[position], Toast.LENGTH_SHORT).show()*/
                     projectBudget = projectBudgets[position]
                     println("this is portfolioType: $projectBudget")
                 }
@@ -276,7 +276,7 @@ class ProjectActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_project, menu)
         if (!edit) {
-            menu.getItem(2).isVisible = false
+            menu.getItem(3).isVisible = false
         }
         return super.onCreateOptionsMenu(menu)
     }

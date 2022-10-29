@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/cinzel"
                     android:gravity="center_horizontal|center_vertical"
                     android:inputType="none"
                     android:paddingTop="6pt"
@@ -80,8 +80,7 @@
                     android:fontFamily="@font/roboto"
                     android:text="@string/edit_portfolio_details"
                     android:textColor="@color/colorSubTitles"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/portfolioTitleLabel"
@@ -102,7 +101,7 @@
                     android:fontFamily="@font/roboto"
                     android:hint="@string/hint_portfolioTitle"
                     android:inputType="text"
-                    android:maxLength="25"
+                    android:maxLength="20"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
