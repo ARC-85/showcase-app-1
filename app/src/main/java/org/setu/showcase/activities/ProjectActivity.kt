@@ -79,7 +79,6 @@ class ProjectActivity : AppCompatActivity() {
             project = intent.extras?.getParcelable("project_edit")!!
             binding.projectName.text = project.projectTitle
             binding.projectName.isVisible = true
-            binding.newProjectLabel.isVisible = false
             binding.projectTitle.setText(project.projectTitle)
             if (!intent.hasExtra("location")) {
                 binding.projectDescription.setText(project.projectDescription)
@@ -139,6 +138,7 @@ class ProjectActivity : AppCompatActivity() {
             project.projectCompletionYear = dateYear
             project.projectBudget = projectBudget
             project.portfolioId = portfolio.id
+            project.projectPortfolioName = portfolio.title
 
             if (project.projectTitle.isEmpty()) {
                 Snackbar.make(it,R.string.enter_project_title, Snackbar.LENGTH_LONG)
@@ -308,6 +308,7 @@ class ProjectActivity : AppCompatActivity() {
                 project.projectCompletionYear = dateYear
                 project.portfolioId = portfolio.id
                 project.projectBudget = projectBudget
+                project.projectPortfolioName = portfolio.title
 
                 if (project.projectTitle.isEmpty()) {
                     Snackbar.make(findViewById(android.R.id.content),R.string.enter_project_title, Snackbar.LENGTH_LONG)
@@ -327,6 +328,10 @@ class ProjectActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
+            }
+            R.id.item_home -> {
+                val intent = Intent(this, PortfolioListActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

@@ -26,6 +26,8 @@
                 android:id="@+id/toolbarPortfolio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorAccentVariant"
+                app:titleTextAppearance="@style/MenuTextAppearance"
                 app:titleTextColor="@color/colorPrimary" />
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -41,37 +43,27 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
+
                 <TextView
                     android:id="@+id/portfolioName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/alata"
+                    android:fontFamily="@font/roboto_medium"
                     android:gravity="center_horizontal|center_vertical"
                     android:inputType="none"
-                    android:textColor="#2AA599"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/newPortfolioLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/alata"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:inputType="none"
+                    android:paddingTop="6pt"
                     android:text="@string/new_portfolio_label"
-                    android:textColor="#2AA599"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/toolbarPortfolio"/>
+                    android:textColor="@color/colorTitles"
+                    android:textSize="34sp"
+                    app:layout_constraintTop_toBottomOf="@id/toolbarPortfolio" />
 
                 <Button
                     android:id="@+id/btnGoToProjects"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorAccentVariant"
                     android:gravity="center|center_horizontal"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
@@ -85,8 +77,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/edit_portfolio_details"
-                    android:textColor="#2AA599"
+                    android:textColor="@color/colorSubTitles"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -94,8 +88,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/portfolio_title_label"
-                    android:textColor="#2AA599" />
+                    android:textColor="#2AA599"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/portfolioTitle"
@@ -103,42 +99,48 @@
                     android:layout_height="45dp"
                     android:layout_margin="8dp"
                     android:autofillHints=""
+                    android:fontFamily="@font/roboto"
                     android:hint="@string/hint_portfolioTitle"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/portfolioDescriptionLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/portfolio_description_label"
-                    android:textColor="#2AA599" />
+                    android:textColor="#2AA599"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:fontFamily="@font/roboto"
                     android:hint="@string/hint_portfolioDescription"
                     android:inputType="text"
-                    android:maxLength="25"
+                    android:maxLength="50"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/portfolioTypeLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/portfolio_type_label"
-                    android:textColor="#2AA599" />
+                    android:textColor="#2AA599"
+                    android:textSize="16sp" />
 
                 <Spinner
                     android:id="@+id/portfolioTypeSpinner"
@@ -150,8 +152,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/portfolio_image_label"
-                    android:textColor="#2AA599" />
+                    android:textColor="#2AA599"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/portfolioImage"
@@ -176,7 +180,7 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
+                    android:background="#3F736E"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"

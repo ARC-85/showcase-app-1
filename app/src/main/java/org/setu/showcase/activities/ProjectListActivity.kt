@@ -146,9 +146,9 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                     projectBudget = projectBudgets[position]
-                    Toast.makeText(this@ProjectListActivity,
+                    /*Toast.makeText(this@ProjectListActivity,
                         getString(R.string.selected_item) + " " +
-                                "" + projectBudgets[position], Toast.LENGTH_SHORT).show()
+                                "" + projectBudgets[position], Toast.LENGTH_SHORT).show()*/
                     projectBudget = projectBudgets[position]
                     println("this is portfolioType: $projectBudget")
                     if (projectBudget == "Show All") {
@@ -190,6 +190,10 @@ class ProjectListActivity : AppCompatActivity(), ProjectListener {
 
                 launcherIntent.putExtra("portfolio_edit", portfolio)
                 refreshIntentLauncher.launch(launcherIntent)
+            }
+            R.id.item_home -> {
+                val intent = Intent(this, PortfolioListActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

@@ -33,7 +33,7 @@ class ProjectMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener
         if (portfolioType == "Show All") {
             binding.toolbar.title = "Map of All Projects"
         } else {
-            binding.toolbar.title = "Map of $portfolioType Projects"
+            binding.toolbar.title = "Map of $portfolioType"
         }
         setSupportActionBar(binding.toolbar)
         contentBinding = ContentProjectMapsBinding.bind(binding.root)
@@ -79,6 +79,7 @@ class ProjectMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener
         if (project != null) {
             contentBinding.currentTitle.text = project.projectTitle
             contentBinding.currentDescription.text = project.projectDescription
+            contentBinding.currentPortfolio.text = "Portfolio: ${project.projectPortfolioName}"
             Picasso.get().load(project.projectImage).resize(200,200).into(contentBinding.currentImage)
         }
         return false

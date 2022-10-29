@@ -15,6 +15,7 @@ var projects: Array<NewProject>? = null) : Parcelable
 @Parcelize
 data class NewProject(var projectId: Long = 0,
                       var portfolioId: Long = 0,
+                      var projectPortfolioName: String = "",
                           var projectTitle: String = "",
                           var projectDescription: String = "",
                           var projectImage: Uri = Uri.EMPTY,

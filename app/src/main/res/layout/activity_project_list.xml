@@ -26,6 +26,8 @@
                 android:id="@+id/toolbarProjectList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorAccentVariant"
+                app:titleTextAppearance="@style/MenuTextAppearance"
                 app:titleTextColor="@color/colorPrimary" />
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -46,26 +48,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/alata"
+                    android:fontFamily="@font/roboto_medium"
                     android:gravity="center_horizontal|center_vertical"
                     android:inputType="none"
+                    android:paddingTop="6pt"
                     android:text="@string/portfolio_projectList"
-                    android:textColor="#2AA599"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/colorTitles"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/portfolioName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/alata"
+                    android:fontFamily="@font/roboto_medium"
                     android:gravity="center_horizontal|center_vertical"
                     android:inputType="none"
                     android:text="@string/title_portfolioName"
-                    android:textColor="#2AA599"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/colorTitles"
+                    android:textSize="34sp" />
 
                 <Button
                     android:id="@+id/btnNewProject"
@@ -85,9 +86,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/btn_budget_filter"
-                    android:textColor="#2AA599"
-                    android:textStyle="bold" />
+                    android:textColor="@color/colorSubTitles"
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:id="@+id/projectBudgetSpinner"

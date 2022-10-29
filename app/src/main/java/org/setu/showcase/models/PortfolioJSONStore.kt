@@ -184,15 +184,29 @@ class PortfolioJSONStore(private val context: Context) : PortfolioStore {
             foundProject.projectCompletionDay = project.projectCompletionDay
             foundProject.projectCompletionMonth = project.projectCompletionMonth
             foundProject.projectCompletionYear = project.projectCompletionYear
+            foundProject.projectPortfolioName = project.projectPortfolioName
             serializeProjects()
         }
         var foundPortfolio: PortfolioModel? = portfolios.find { p -> p.id == portfolio.id }
         if (foundPortfolio != null) {
 
             if (foundPortfolio.projects != null) {
-                var portfolioProjects = foundPortfolio.projects!!.dropLast(1)
-                portfolioProjects = portfolioProjects?.plus(project)
-                foundPortfolio.projects = ArrayList(portfolioProjects).toTypedArray()
+
+                var projectIdList = arrayListOf<Long>()
+
+                foundPortfolio.projects!!.forEach {
+                    projectIdList += it.projectId
+                }
+                println("this is projectIdList: $projectIdList")
+                val index = projectIdList.indexOf(project.projectId)
+                println("this is index: $index")
+                var portfolioProjects1 = foundPortfolio.projects!!.toMutableList()
+                var short = portfolioProjects1.removeAt(index)
+                println("this is short: $short")
+                //var portfolioProjects = foundPortfolio.projects!!.drop(index)
+                portfolioProjects1 = portfolioProjects1.plus(project) as MutableList<NewProject>
+                //foundPortfolio.projects = ArrayList(portfolioProjects).toTypedArray()
+                foundPortfolio.projects = ArrayList(portfolioProjects1).toTypedArray()
 
             }
             serialize()

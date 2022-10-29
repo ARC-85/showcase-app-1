@@ -10,9 +10,8 @@
     <ImageView
         android:id="@+id/splashImageView"
         android:layout_width="wrap_content"
-        android:layout_height="223dp"
-        android:layout_margin="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="220dp"
+        android:layout_margin="30dp"
         android:contentDescription="@string/splash_image"
         app:srcCompat="@drawable/_10_1_3d_view_2" />
 
@@ -20,12 +19,12 @@
         android:id="@+id/splashTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/allerta_stencil"
+        android:fontFamily="@font/cinzel_decorative"
         android:gravity="center|center_horizontal|center_vertical"
         android:padding="30dp"
         android:text="@string/app_name"
 
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorTitles"
         android:textSize="48sp"
         android:textStyle="bold" />
 
@@ -34,19 +33,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:indeterminateTint="@color/black" />
+        android:indeterminateTint="@color/colorButtons" />
 
     <TextView
         android:id="@+id/splashTextView1"
         android:layout_width="match_parent"
         android:layout_height="99dp"
         android:layout_marginTop="60dp"
+        android:fontFamily="@font/roboto"
         android:gravity="center_horizontal"
         android:padding="15dp"
         android:text="@string/designed_by"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textColor="@color/colorSubTitles"
+        android:textSize="24sp" />
 
 
 </LinearLayout>
