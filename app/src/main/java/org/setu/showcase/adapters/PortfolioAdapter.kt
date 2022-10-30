@@ -32,7 +32,7 @@ class PortfolioAdapter constructor(private var portfolios: List<PortfolioModel>,
 
     class MainHolder(private val binding : CardPortfolioBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+        // Function to bind different values to the portfolio adapter card
         fun bind(portfolio: PortfolioModel, listener: PortfolioListener) {
             binding.portfolioTitle.text = portfolio.title
             binding.portfolioDescription.text = portfolio.description

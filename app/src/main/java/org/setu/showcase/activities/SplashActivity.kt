@@ -14,11 +14,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         val handler = Handler(Looper.getMainLooper())
-        val splashTimeOut:Long = 3000
+        val splashTimeOut:Long = 3000 // Hold splash screen for 30 seconds before moving to portfolio list (home)
         handler.postDelayed({
-
             val intent = Intent(this, PortfolioListActivity::class.java)
-
             startActivity(intent)
             finish()
         },splashTimeOut)
