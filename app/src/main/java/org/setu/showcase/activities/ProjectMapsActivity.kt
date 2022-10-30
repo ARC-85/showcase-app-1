@@ -22,14 +22,15 @@ class ProjectMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener
     private lateinit var contentBinding: ContentProjectMapsBinding
     lateinit var map: GoogleMap
     lateinit var app: MainApp
-    var portfolioType = ""
+    var portfolioType = "" // Create variable for portfolio type
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = application as MainApp
         binding = ActivityProjectMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        portfolioType = intent.getStringExtra("portfolio_type")!!
+        portfolioType = intent.getStringExtra("portfolio_type")!! // Get the selected portfolio type from the data passed from portfolio list activity
+        // Set toolbar title depending on selection
         if (portfolioType == "Show All") {
             binding.toolbar.title = "Map of All Projects"
         } else {
@@ -40,12 +41,8 @@ class ProjectMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener
         contentBinding.mapView.onCreate(savedInstanceState)
         contentBinding.mapView.getMapAsync {
             map = it
-            configureMap()
+            configureMap() // Calling configure map function
         }
-
-
-
-
         println("this is maps portfolioType: $portfolioType")
     }
 
@@ -54,28 +51,27 @@ class ProjectMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener
         map.uiSettings.setZoomControlsEnabled(true)
         println("this is findProjects: " + app.portfolios.findProjects())
         if (portfolioType == "Show All") {
-            app.portfolios.findProjects().forEach {
+            app.portfolios.findProjects().forEach { // If show all selected, use function for finding all projects from JSON file
                 val loc = LatLng(it.lat, it.lng)
                 val options = MarkerOptions().title(it.projectTitle).position(loc)
                 map.addMarker(options)?.tag = it.projectId
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
             }
         } else {
-            app.portfolios.findSpecificTypeProjects(portfolioType).forEach {
+            app.portfolios.findSpecificTypeProjects(portfolioType).forEach { // If specific portfolio type selected, use function for finding specific projects, passing portfolio type
                 val loc = LatLng(it.lat, it.lng)
                 val options = MarkerOptions().title(it.projectTitle).position(loc)
                 map.addMarker(options)?.tag = it.projectId
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
             }
         }
-
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
         val tag = marker.tag as Long
         val project = app.portfolios.findProject(tag)
-        //contentBinding.currentTitle.text = marker.title
         println("this is project: $project")
+        // Display information about a project upon clicking on tag, based on project ID
         if (project != null) {
             contentBinding.currentTitle.text = project.projectTitle
             contentBinding.currentDescription.text = project.projectDescription

@@ -40,7 +40,7 @@ class ProjectAdapter constructor(private var projects: List<NewProject>,
 
 
         fun bind(project: NewProject, listener: ProjectListener) {
-
+            // Function to bind different values to the project adapter card
             binding.projectTitle.text = project.projectTitle
             binding.projectBudget.text = project.projectBudget
             binding.projectDescription.text = project.projectDescription

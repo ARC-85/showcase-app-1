@@ -19,8 +19,5 @@ class MainApp : Application() {
         portfolios = PortfolioJSONStore(applicationContext)
         //projects = PortfolioMemStore()
         i("Showcase started")
-        // portfolios.add(PortfolioModel("One", "About one..."))
-        // portfolios.add(PortfolioModel("Two", "About two..."))
-        // portfolios.add(PortfolioModel("Three", "About three..."))
     }
 }
